@@ -1,6 +1,11 @@
 #pragma once
-
 #include "Curriculum.h"
+
+struct CourseRecord {
+    string name;
+    string couseCode;
+    int semester;
+};
 
 class CourseHistory {
     private:
@@ -10,9 +15,10 @@ class CourseHistory {
         CourseHistory();
         bool fileExists();
         void loadCourses();
-        void promptEnterCourses();
+        void promptEnterCourses(Curriculum& curriculum);
+        void enterCourses(Curriculum& curriculum);
         bool validateCourse(string course);
-        void enterCourses();
+        bool validateInput(int& input, int min, int max);
         void saveCourses();
         bool hasCompleted(string course);
         vector<string> getCourses();

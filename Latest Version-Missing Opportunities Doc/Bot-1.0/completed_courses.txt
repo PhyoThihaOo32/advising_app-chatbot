@@ -1,6 +1,0 @@
-ENG 101
-ENG 201
-CIS 395
-GLY 210
-XXX xxx
-XXX xxx

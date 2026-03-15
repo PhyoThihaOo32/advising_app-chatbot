@@ -1,5 +1,5 @@
 // implementation file for Internship class
-#include "internship.h"
+#include "Internship.h"
 #include <iostream>
 
 using namespace std;
@@ -14,8 +14,7 @@ Internship::Internship()
         "NYC Department of Environmental Protection (DEP)",
         "U.S. Coast Guard",
         "National Intelligence University",
-        "Environmental Investigation Agency (EIA)"
-    };
+        "Environmental Investigation Agency (EIA)"};
 
     // internship course information
     courseInfo = {
@@ -23,24 +22,21 @@ Internship::Internship()
         "Course Number: GIS 325",
         "Credits: 2 credits",
         "Students typically work around 15 hours per week during the semester.",
-        "The internship allows students to apply GIS knowledge in a professional environment."
-    };
+        "The internship allows students to apply GIS knowledge in a professional environment."};
 
     // requirements
     requirements = {
         "Students work approximately 15 hours per week.",
         "A term project must be completed during the internship.",
         "Students are evaluated by their internship supervisor.",
-        "Students must arrange their schedules to be available during work hours."
-    };
+        "Students must arrange their schedules to be available during work hours."};
 
     // resources available at BMCC
     resources = {
         "BMCC Center for Career Development helps with resumes and interview preparation.",
         "Students can use Handshake to search for internships and jobs.",
         "Career advisors and faculty can help students find internship opportunities.",
-        "BMCC career events and internship expos help students connect with employers."
-    };
+        "BMCC career events and internship expos help students connect with employers."};
 }
 
 // add organization
@@ -68,7 +64,7 @@ void Internship::showOrganizations() const
     cout << " GIS INTERNSHIP ORGANIZATIONS\n";
     cout << "========================\n\n";
 
-    for (const string& o : organizations)
+    for (const string &o : organizations)
     {
         cout << "- " << o << endl;
     }
@@ -83,7 +79,7 @@ void Internship::showCourseInfo() const
     cout << " GIS INTERNSHIP COURSE\n";
     cout << "========================\n\n";
 
-    for (const string& c : courseInfo)
+    for (const string &c : courseInfo)
     {
         cout << "- " << c << endl;
     }
@@ -98,7 +94,7 @@ void Internship::showRequirements() const
     cout << " INTERNSHIP REQUIREMENTS\n";
     cout << "========================\n\n";
 
-    for (const string& r : requirements)
+    for (const string &r : requirements)
     {
         cout << "- " << r << endl;
     }
@@ -113,7 +109,7 @@ void Internship::showResources() const
     cout << " INTERNSHIP RESOURCES AT BMCC\n";
     cout << "========================\n\n";
 
-    for (const string& r : resources)
+    for (const string &r : resources)
     {
         cout << "- " << r << endl;
     }

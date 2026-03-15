@@ -1,5 +1,5 @@
 // implementation file for Career class
-#include "career.h"
+#include "Career.h"
 #include <iostream>
 
 using namespace std;
@@ -105,9 +105,9 @@ void Career::showCareer() const
     cout << "     GIS CAREER PATHS\n";
     cout << "========================\n\n";
 
-    cout << "GIS is used in many industries including law enforcement, "
-            "urban planning, environmental science, healthcare, "
-            "transportation, and business analytics.\n\n";
+    cout << "GIS is used in many industries including law enforcement, " << endl
+         << "urban planning, environmental science, healthcare, " << endl
+         << "transportation, and business analytics.\n\n";
 
     for (const string &c : career)
     {
