@@ -21,9 +21,6 @@ int main()
 
     char repeat; // variable used to repeat the program
 
-    // ------------------------------------------------------
-    // 1. Welcome Message
-    // ------------------------------------------------------
     cout << "======================================================\n";
     cout << "Welcome to the BMCC Advising Bot!\n";
     cout << "Geographic Information Science\n";
@@ -32,9 +29,7 @@ int main()
     // Main program loop (allows user to continue using the system)
     do
     {
-        // ------------------------------------------------------
-        // 2. Main Menu (Hub of the advising system)
-        // ------------------------------------------------------
+        // Main Menu (Hub of the advising system)
         int command;
 
         cout << "\n[1] Curriculum Advising\n"
@@ -121,8 +116,8 @@ int main()
 
         // ---------------- Exit Program ----------------
         case 0:
-            cout << "Exiting program...\n";
-            return 0;
+            cout << "Exiting Program.. " << endl;
+            break;
 
         default:
             break;
@@ -133,6 +128,10 @@ int main()
         cin >> repeat;
 
     } while (repeat == 'y' || repeat == 'Y');
+
+    cout << "Thank you for using the GIS Advising App." << endl
+         << "Wishing you success in your academic journey and future career." << endl
+         << "Cheer!" << endl;
 
     return 0;
 }
