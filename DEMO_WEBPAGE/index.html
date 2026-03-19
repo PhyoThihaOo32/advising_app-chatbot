@@ -4,171 +4,236 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>GIS Advising App</title>
+        <title>GIS Advising App | BMCC Student Project</title>
         <style>
+            :root {
+                --bg: #06101d;
+                --bg2: #0b1f35;
+                --panel: rgba(255, 255, 255, 0.07);
+                --panel-2: rgba(255, 255, 255, 0.05);
+                --line: rgba(255, 255, 255, 0.12);
+                --text: #eef6ff;
+                --muted: #c9d8eb;
+                --accent: #78ddff;
+                --accent2: #5df2cb;
+                --shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+                --radius: 24px;
+            }
+
             * {
                 box-sizing: border-box;
                 margin: 0;
                 padding: 0;
             }
 
+            html {
+                scroll-behavior: smooth;
+            }
+
             body {
                 font-family: Arial, Helvetica, sans-serif;
-                background: linear-gradient(135deg, #07111f 0%, #0c1f35 45%, #12385a 100%);
-                color: #f5f7fb;
-                min-height: 100vh;
+                color: var(--text);
+                background:
+                    radial-gradient(circle at 10% 10%, rgba(120, 221, 255, 0.18), transparent 22%),
+                    radial-gradient(circle at 88% 15%, rgba(93, 242, 203, 0.12), transparent 18%),
+                    radial-gradient(circle at 78% 72%, rgba(90, 120, 255, 0.18), transparent 20%),
+                    linear-gradient(135deg, var(--bg) 0%, #0b1630 45%, var(--bg2) 100%);
                 overflow-x: hidden;
             }
 
-            .bg-glow {
+            .orb,
+            .orb2 {
                 position: fixed;
-                inset: 0;
+                border-radius: 50%;
+                filter: blur(45px);
                 pointer-events: none;
-                background:
-                    radial-gradient(circle at 15% 20%, rgba(88, 196, 255, 0.22), transparent 25%),
-                    radial-gradient(circle at 80% 18%, rgba(102, 126, 234, 0.24), transparent 22%),
-                    radial-gradient(circle at 75% 70%, rgba(0, 255, 204, 0.15), transparent 25%),
-                    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08), transparent 18%);
                 z-index: 0;
+                opacity: 0.55;
+            }
+
+            .orb {
+                width: 280px;
+                height: 280px;
+                background: rgba(120, 221, 255, 0.16);
+                left: -70px;
+                top: 80px;
+            }
+
+            .orb2 {
+                width: 320px;
+                height: 320px;
+                background: rgba(93, 242, 203, 0.14);
+                right: -90px;
+                top: 280px;
             }
 
             header {
                 position: sticky;
                 top: 0;
-                z-index: 20;
-                backdrop-filter: blur(10px);
-                background: rgba(5, 14, 25, 0.55);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                z-index: 50;
+                backdrop-filter: blur(12px);
+                background: rgba(5, 14, 25, 0.65);
+                border-bottom: 1px solid var(--line);
+            }
+
+            .container {
+                width: min(1180px, 92%);
+                margin: auto;
+                position: relative;
+                z-index: 1;
             }
 
             .nav {
-                width: min(1180px, 92%);
-                margin: auto;
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
+                justify-content: space-between;
                 padding: 18px 0;
+                gap: 20px;
             }
 
-            .logo {
+            .brand {
                 font-size: 1.35rem;
-                font-weight: 700;
-                letter-spacing: 0.5px;
+                font-weight: 800;
+                letter-spacing: 0.3px;
             }
 
-            .logo span {
-                color: #7bdcff;
+            .brand span {
+                color: var(--accent);
             }
 
             .nav-links {
                 display: flex;
-                gap: 24px;
                 list-style: none;
-            }
-
-            .nav-links a {
-                text-decoration: none;
-                color: #e8f0ff;
-                font-size: 0.95rem;
-                transition: 0.25s;
-            }
-
-            .nav-links a:hover {
-                color: #7bdcff;
-            }
-
-            .hero {
-                position: relative;
-                z-index: 1;
-                width: min(1180px, 92%);
-                margin: 0 auto;
-                min-height: 92vh;
-                display: grid;
-                grid-template-columns: 1.1fr 0.9fr;
-                align-items: center;
-                gap: 40px;
-                padding: 40px 0 20px;
-            }
-
-            .hero-text h1 {
-                font-size: clamp(2.6rem, 5vw, 5rem);
-                line-height: 1.05;
-                margin-bottom: 18px;
-            }
-
-            .hero-text h1 span {
-                color: #7bdcff;
-                text-shadow: 0 0 18px rgba(123, 220, 255, 0.4);
-            }
-
-            .hero-text p {
-                font-size: 1.08rem;
-                color: #d7e2f3;
-                max-width: 640px;
-                line-height: 1.75;
-                margin-bottom: 28px;
-            }
-
-            .btn-group {
-                display: flex;
-                gap: 16px;
+                gap: 20px;
                 flex-wrap: wrap;
             }
 
-            .btn {
-                padding: 14px 24px;
-                border-radius: 999px;
+            .nav-links a {
+                color: var(--text);
                 text-decoration: none;
-                font-weight: 700;
-                transition: 0.28s ease;
+                font-size: 0.95rem;
+                transition: 0.25s ease;
+            }
+
+            .nav-links a:hover {
+                color: var(--accent);
+            }
+
+            .hero {
+                min-height: 95vh;
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 34px;
+                align-items: center;
+                padding: 52px 0 24px;
+            }
+
+            .eyebrow {
                 display: inline-block;
+                padding: 8px 14px;
+                border-radius: 999px;
+                background: rgba(120, 221, 255, 0.12);
+                border: 1px solid rgba(120, 221, 255, 0.2);
+                color: var(--accent);
+                font-size: 0.88rem;
+                margin-bottom: 18px;
+                font-weight: 700;
+            }
+
+            .hero h1 {
+                font-size: clamp(2.7rem, 5vw, 5rem);
+                line-height: 1.04;
+                margin-bottom: 18px;
+            }
+
+            .hero h1 span {
+                color: var(--accent);
+                text-shadow: 0 0 20px rgba(120, 221, 255, 0.22);
+            }
+
+            .hero p {
+                max-width: 700px;
+                color: var(--muted);
+                font-size: 1.06rem;
+                line-height: 1.78;
+                margin-bottom: 26px;
+            }
+
+            .btn-row {
+                display: flex;
+                gap: 14px;
+                flex-wrap: wrap;
+                margin-bottom: 24px;
+            }
+
+            .btn {
+                display: inline-block;
+                text-decoration: none;
+                padding: 14px 22px;
+                border-radius: 999px;
+                font-weight: 800;
+                transition: 0.28s ease;
             }
 
             .btn-primary {
-                background: linear-gradient(90deg, #55d8ff, #4df2c2);
+                background: linear-gradient(90deg, var(--accent), var(--accent2));
                 color: #08111c;
-                box-shadow: 0 10px 28px rgba(85, 216, 255, 0.25);
-            }
-
-            .btn-primary:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 14px 32px rgba(85, 216, 255, 0.35);
+                box-shadow: 0 12px 28px rgba(120, 221, 255, 0.25);
             }
 
             .btn-secondary {
-                border: 1px solid rgba(255, 255, 255, 0.18);
-                color: #f0f7ff;
-                background: rgba(255, 255, 255, 0.04);
+                color: var(--text);
+                border: 1px solid var(--line);
+                background: rgba(255, 255, 255, 0.05);
             }
 
-            .btn-secondary:hover {
-                background: rgba(255, 255, 255, 0.1);
+            .btn:hover {
                 transform: translateY(-3px);
             }
 
+            .mini-stats {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px;
+                max-width: 720px;
+            }
+
+            .mini-stat {
+                background: var(--panel);
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                padding: 18px;
+                backdrop-filter: blur(10px);
+            }
+
+            .mini-stat h3 {
+                color: var(--accent);
+                font-size: 1.4rem;
+                margin-bottom: 6px;
+            }
+
             .hero-card {
-                position: relative;
                 background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
-                border: 1px solid rgba(255, 255, 255, 0.1);
+                border: 1px solid var(--line);
                 border-radius: 28px;
-                padding: 26px;
-                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
-                backdrop-filter: blur(14px);
+                padding: 24px;
+                box-shadow: var(--shadow);
+                position: relative;
                 overflow: hidden;
             }
 
             .hero-card::before {
                 content: "";
                 position: absolute;
-                width: 220px;
-                height: 220px;
-                background: radial-gradient(circle, rgba(123, 220, 255, 0.35), transparent 70%);
-                top: -50px;
-                right: -50px;
+                width: 260px;
+                height: 260px;
+                background: radial-gradient(circle, rgba(120, 221, 255, 0.22), transparent 68%);
+                right: -70px;
+                top: -70px;
                 border-radius: 50%;
             }
 
-            .chat-window {
+            .bot-ui {
                 position: relative;
                 z-index: 1;
                 display: flex;
@@ -176,307 +241,510 @@
                 gap: 14px;
             }
 
-            .bot-title {
-                font-size: 1.15rem;
-                font-weight: bold;
-                margin-bottom: 8px;
-                color: #7bdcff;
+            .bot-ui h3 {
+                color: var(--accent);
+                margin-bottom: 4px;
             }
 
             .bubble {
                 max-width: 88%;
                 padding: 14px 16px;
                 border-radius: 18px;
-                line-height: 1.55;
+                line-height: 1.6;
                 font-size: 0.96rem;
             }
 
-            .bot {
-                background: rgba(123, 220, 255, 0.16);
-                border: 1px solid rgba(123, 220, 255, 0.18);
-                align-self: flex-start;
-            }
-
             .user {
+                align-self: flex-end;
                 background: rgba(255, 255, 255, 0.08);
                 border: 1px solid rgba(255, 255, 255, 0.09);
-                align-self: flex-end;
             }
 
-            .stats {
-                width: min(1180px, 92%);
-                margin: 10px auto 60px;
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                gap: 18px;
-                position: relative;
-                z-index: 1;
+            .bot {
+                align-self: flex-start;
+                background: rgba(120, 221, 255, 0.16);
+                border: 1px solid rgba(120, 221, 255, 0.18);
             }
 
-            .stat {
-                background: rgba(255, 255, 255, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 22px;
-                padding: 24px;
-                text-align: center;
-                backdrop-filter: blur(10px);
-            }
-
-            .stat h3 {
-                font-size: 2rem;
-                color: #7bdcff;
-                margin-bottom: 8px;
-            }
-
-            .section {
-                width: min(1180px, 92%);
-                margin: 0 auto 80px;
-                position: relative;
-                z-index: 1;
+            section {
+                padding: 70px 0;
             }
 
             .section-title {
                 text-align: center;
-                margin-bottom: 34px;
+                margin-bottom: 36px;
             }
 
             .section-title h2 {
                 font-size: clamp(2rem, 3vw, 3rem);
-                margin-bottom: 10px;
+                margin-bottom: 12px;
             }
 
             .section-title p {
-                color: #d1deef;
                 max-width: 780px;
                 margin: auto;
-                line-height: 1.7;
+                color: var(--muted);
+                line-height: 1.75;
+            }
+
+            .grid-4,
+            .grid-3,
+            .grid-2 {
+                display: grid;
+                gap: 20px;
+            }
+
+            .grid-4 {
+                grid-template-columns: repeat(4, 1fr);
             }
 
             .grid-3 {
-                display: grid;
                 grid-template-columns: repeat(3, 1fr);
-                gap: 22px;
+            }
+
+            .grid-2 {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .card {
-                background: rgba(255, 255, 255, 0.06);
-                border: 1px solid rgba(255, 255, 255, 0.08);
-                border-radius: 24px;
-                padding: 26px;
-                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+                background: var(--panel);
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+                padding: 24px;
+                box-shadow: var(--shadow);
                 transition: 0.3s ease;
+                backdrop-filter: blur(10px);
             }
 
             .card:hover {
                 transform: translateY(-8px);
-                border-color: rgba(123, 220, 255, 0.35);
+                border-color: rgba(120, 221, 255, 0.28);
             }
 
             .card h3 {
+                color: var(--accent);
                 margin-bottom: 10px;
-                color: #7bdcff;
+                font-size: 1.08rem;
             }
 
-            .card p {
-                color: #d7e2f3;
+            .card p,
+            .card li {
+                color: var(--muted);
                 line-height: 1.7;
+                font-size: 0.97rem;
             }
 
-            .cta {
-                text-align: center;
-                padding: 46px 26px;
-                background: linear-gradient(135deg, rgba(123, 220, 255, 0.12), rgba(77, 242, 194, 0.08));
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 28px;
-                backdrop-filter: blur(12px);
+            .card ul {
+                padding-left: 18px;
+                margin-top: 10px;
             }
 
-            .cta h2 {
-                font-size: clamp(2rem, 3.4vw, 3rem);
+            .feature-icon {
+                width: 52px;
+                height: 52px;
+                display: grid;
+                place-items: center;
+                border-radius: 16px;
+                background: rgba(120, 221, 255, 0.14);
+                border: 1px solid rgba(120, 221, 255, 0.18);
                 margin-bottom: 14px;
+                font-weight: 800;
+                color: var(--accent);
             }
 
-            .cta p {
-                max-width: 760px;
-                margin: 0 auto 22px;
-                line-height: 1.75;
-                color: #d8e5f7;
+            .timeline {
+                display: grid;
+                gap: 18px;
             }
 
-            footer {
+            .step {
+                display: flex;
+                gap: 16px;
+                align-items: flex-start;
+                background: var(--panel-2);
+                border: 1px solid var(--line);
+                border-radius: 18px;
+                padding: 18px;
+            }
+
+            .step-num {
+                width: 38px;
+                height: 38px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, var(--accent), var(--accent2));
+                color: #08111c;
+                display: grid;
+                place-items: center;
+                font-weight: 800;
+                flex-shrink: 0;
+            }
+
+            .team-card h4 {
+                font-size: 1.08rem;
+                margin-bottom: 8px;
+            }
+
+            .team-role {
+                color: var(--accent);
+                font-size: 0.92rem;
+                font-weight: 700;
+                margin-bottom: 12px;
+            }
+
+            .showcase {
+                background: linear-gradient(135deg, rgba(120, 221, 255, 0.11), rgba(93, 242, 203, 0.06));
+                border: 1px solid var(--line);
+                border-radius: 28px;
+                padding: 36px;
                 text-align: center;
-                padding: 28px 20px 40px;
-                color: #b9c8df;
-                font-size: 0.95rem;
-                position: relative;
-                z-index: 1;
+                box-shadow: var(--shadow);
             }
 
-            @media (max-width: 980px) {
+            .showcase p {
+                max-width: 780px;
+                margin: 0 auto 18px;
+                color: var(--muted);
+                line-height: 1.75;
+            }
+
+            .footer {
+                padding: 30px 0 46px;
+                text-align: center;
+                color: #b9c8df;
+                border-top: 1px solid var(--line);
+                margin-top: 30px;
+            }
+
+            @media (max-width: 1050px) {
                 .hero {
                     grid-template-columns: 1fr;
-                    padding-top: 24px;
                 }
 
-                .stats {
+                .grid-4 {
                     grid-template-columns: repeat(2, 1fr);
                 }
 
                 .grid-3 {
                     grid-template-columns: 1fr;
                 }
+
+                .grid-2 {
+                    grid-template-columns: 1fr;
+                }
             }
 
-            @media (max-width: 680px) {
+            @media (max-width: 700px) {
                 .nav {
                     flex-direction: column;
-                    gap: 12px;
                 }
 
                 .nav-links {
-                    flex-wrap: wrap;
                     justify-content: center;
-                    gap: 14px;
                 }
 
-                .stats {
+                .mini-stats,
+                .grid-4 {
                     grid-template-columns: 1fr;
                 }
 
-                .hero-text p {
-                    font-size: 1rem;
+                .hero {
+                    min-height: auto;
+                    padding-top: 30px;
+                }
+
+                .showcase,
+                .card,
+                .hero-card {
+                    padding: 22px;
                 }
             }
         </style>
     </head>
 
     <body>
-        <div class="bg-glow"></div>
+        <div class="orb"></div>
+        <div class="orb2"></div>
 
         <header>
-            <nav class="nav">
-                <div class="logo">GIS <span>Advising App</span></div>
+            <div class="container nav">
+                <div class="brand">GIS <span>Advising App</span></div>
                 <ul class="nav-links">
+                    <li><a href="#overview">Overview</a></li>
                     <li><a href="#features">Features</a></li>
-                    <li><a href="#about">About</a></li>
+                    <li><a href="#flow">System Flow</a></li>
+                    <li><a href="#team">Team</a></li>
                     <li><a href="#future">Future</a></li>
                 </ul>
-            </nav>
+            </div>
         </header>
 
-        <section class="hero">
-            <div class="hero-text">
-                <h1>Smart Support for <span>BMCC GIS Students</span></h1>
-                <p>
-                    A modern advising chatbot designed to help students with course planning, career pathways,
-                    alumni insight, transfer options, and internship or research opportunities — all in one place.
-                </p>
-                <div class="btn-group">
-                    <a href="#features" class="btn btn-primary">Explore Features</a>
-                    <a href="#future" class="btn btn-secondary">Project Vision</a>
-                </div>
-            </div>
+        <main>
+            <section id="overview">
+                <div class="container hero">
+                    <div>
+                        <div class="eyebrow">BMCC Student Project • GIS Advising Assistant</div>
+                        <h1>Smarter Academic Support for <span>GIS Students</span></h1>
+                        <p>
+                            The GIS Advising App is an on-demand chatbot designed to help BMCC students access course
+                            guidance,
+                            degree progress support, career pathways, alumni insight, transfer options, and internship
+                            or research information
+                            in one clear and student-friendly platform.
+                        </p>
+                        <div class="btn-row">
+                            <a class="btn btn-primary" href="#features">See Features</a>
+                            <a class="btn btn-secondary" href="#team">Meet the Team</a>
+                        </div>
+                        <div class="mini-stats">
+                            <div class="mini-stat">
+                                <h3>62</h3>
+                                <p>Credit goal awareness</p>
+                            </div>
+                            <div class="mini-stat">
+                                <h3>24/7</h3>
+                                <p>On-demand student support</p>
+                            </div>
+                            <div class="mini-stat">
+                                <h3>1 Hub</h3>
+                                <p>Advising + careers + transfer</p>
+                            </div>
+                        </div>
+                    </div>
 
-            <div class="hero-card">
-                <div class="chat-window">
-                    <div class="bot-title">AI Chat Preview</div>
-                    <div class="bubble user">What classes should I take next semester for GIS?</div>
-                    <div class="bubble bot">Based on your completed courses, I can help suggest your next GIS classes
-                        and show your progress toward graduation.</div>
-                    <div class="bubble user">Can you also show career paths and transfer options?</div>
-                    <div class="bubble bot">Yes — I can guide you through GIS careers, alumni insight, transfer
-                        opportunities, and internship or research support.</div>
+                    <div class="hero-card">
+                        <div class="bot-ui">
+                            <h3>Chatbot Preview</h3>
+                            <div class="bubble user">What classes should I take next semester?</div>
+                            <div class="bubble bot">I can check your completed courses, show degree progress, and
+                                suggest possible next GIS classes.</div>
+                            <div class="bubble user">Can you also show transfer options and careers?</div>
+                            <div class="bubble bot">Yes. I can guide you through GIS career pathways, alumni
+                                experiences, transfer schools, and internship or research opportunities.</div>
+                            <div class="bubble user">That makes advising much easier.</div>
+                            <div class="bubble bot">That is the goal — clearer, faster, and more accessible student
+                                support.</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="stats">
-            <div class="stat">
-                <h3>62</h3>
-                <p>Credit goal support</p>
-            </div>
-            <div class="stat">
-                <h3>24/7</h3>
-                <p>On-demand guidance</p>
-            </div>
-            <div class="stat">
-                <h3>1</h3>
-                <p>Unified student hub</p>
-            </div>
-            <div class="stat">
-                <h3>∞</h3>
-                <p>Future possibilities</p>
-            </div>
-        </section>
+            <section id="features">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Core Features</h2>
+                        <p>
+                            Our chatbot combines structured academic support with career and opportunity guidance so
+                            students can make better decisions with less confusion.
+                        </p>
+                    </div>
 
-        <section class="section" id="features">
-            <div class="section-title">
-                <h2>What the App Can Do</h2>
-                <p>
-                    Our project brings together academic advising, degree planning, career exploration, and real-world
-                    opportunities into a student-friendly platform.
-                </p>
-            </div>
-            <div class="grid-3">
-                <div class="card">
-                    <h3>Academic Advising</h3>
-                    <p>Helps students understand course pathways, degree requirements, and what classes to take next.
-                    </p>
+                    <div class="grid-4">
+                        <div class="card">
+                            <div class="feature-icon">01</div>
+                            <h3>Advising Support</h3>
+                            <p>Helps students understand degree requirements, next-course options, and planning pathways
+                                such as a 2-year or 3-year pace.</p>
+                        </div>
+                        <div class="card">
+                            <div class="feature-icon">02</div>
+                            <h3>Career Pathways</h3>
+                            <p>Introduces GIS-related industries and roles while helping students connect their
+                                interests to possible future careers.</p>
+                        </div>
+                        <div class="card">
+                            <div class="feature-icon">03</div>
+                            <h3>Alumni Insight</h3>
+                            <p>Highlights real BMCC alumni experiences so students can see how GIS applies in
+                                professional settings and stay motivated.</p>
+                        </div>
+                        <div class="card">
+                            <div class="feature-icon">04</div>
+                            <h3>Transfer & Opportunities</h3>
+                            <p>Brings together transfer information, internships, and research opportunities into one
+                                accessible support system.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h3>Career Guidance</h3>
-                    <p>Shows GIS-related career paths, alumni experiences, and motivation from real professionals.</p>
-                </div>
-                <div class="card">
-                    <h3>Transfer & Opportunities</h3>
-                    <p>Brings together transfer options, internship information, and research opportunities in one
-                        place.</p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="section" id="about">
-            <div class="section-title">
-                <h2>Why This Project Matters</h2>
-                <p>
-                    Advising offices are often busy, degree maps can feel confusing, and students may be unsure about
-                    their next steps. This app aims to make support clearer, faster, and easier to access.
-                </p>
-            </div>
-            <div class="grid-3">
-                <div class="card">
-                    <h3>Less Confusion</h3>
-                    <p>Students can quickly find the information they need without feeling overwhelmed by scattered
-                        resources.</p>
-                </div>
-                <div class="card">
-                    <h3>Better Planning</h3>
-                    <p>Progress tracking and advising support help students avoid taking the wrong classes and wasting
-                        time or money.</p>
-                </div>
-                <div class="card">
-                    <h3>More Confidence</h3>
-                    <p>Career guidance, alumni insight, and transfer pathways can help students make stronger academic
-                        decisions.</p>
-                </div>
-            </div>
-        </section>
+            <section>
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Menu Branching Structure</h2>
+                        <p>
+                            The chatbot is organized with branching options so students can move from a main category
+                            into more detailed support instead of receiving only one fixed response.
+                        </p>
+                    </div>
 
-        <section class="section" id="future">
-            <div class="cta">
-                <h2>The Future Vision</h2>
-                <p>
-                    We hope to turn this into a polished web and mobile-friendly experience, with more dynamic
-                    conversation features, stronger personalization, and future LLM integration. In the long term, this
-                    project could expand beyond GIS to support CS, CIS, and eventually all BMCC students across
-                    different majors.
-                </p>
-                <a href="#" class="btn btn-primary">Built for Students</a>
-            </div>
-        </section>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3>Main Menu</h3>
+                            <ul>
+                                <li>Advising</li>
+                                <li>Career Pathways</li>
+                                <li>Transfer Options</li>
+                                <li>Internship / Research</li>
+                                <li>Course History</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3>Submenu Examples</h3>
+                            <ul>
+                                <li>View degree requirements</li>
+                                <li>See completed courses</li>
+                                <li>Explore alumni advice</li>
+                                <li>Compare transfer schools</li>
+                                <li>Find internship or research opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <footer>
-            GIS Advising App • BMCC Student Project • Designed with creativity, teamwork, and purpose
+            <section id="flow">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>How the System Works</h2>
+                        <p>
+                            The project uses C++ classes, vectors, and file handling to organize student information and
+                            respond with targeted answers.
+                        </p>
+                    </div>
+
+                    <div class="timeline">
+                        <div class="step">
+                            <div class="step-num">1</div>
+                            <div>
+                                <h3>Collect Information</h3>
+                                <p>Course data, advising information, alumni insight, transfer resources, and internship
+                                    or research details are gathered from BMCC-related sources.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">2</div>
+                            <div>
+                                <h3>Organize Data</h3>
+                                <p>The information is structured using separate C++ classes and container-based logic to
+                                    keep each feature clear and manageable.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">3</div>
+                            <div>
+                                <h3>Track Student Progress</h3>
+                                <p>Completed courses can be saved and used to filter curriculum guidance, helping
+                                    students see what they already finished and what comes next.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-num">4</div>
+                            <div>
+                                <h3>Generate Helpful Responses</h3>
+                                <p>The chatbot provides filtered, concise, and relevant support so students can
+                                    understand their options more quickly and confidently.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Project Impact</h2>
+                        <p>
+                            This solution aims to reduce confusion, improve planning, and make advising more accessible
+                            for students who may not always be able to get immediate help.
+                        </p>
+                    </div>
+
+                    <div class="grid-3">
+                        <div class="card">
+                            <h3>Clearer Planning</h3>
+                            <p>Students can understand degree progress and next steps without feeling lost in
+                                complicated degree maps or scattered information.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Better Decisions</h3>
+                            <p>Career guidance, alumni motivation, and transfer resources help students make more
+                                informed academic and professional choices.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Time and Cost Savings</h3>
+                            <p>By helping students avoid unnecessary classes or poor course sequencing, the app can
+                                support smarter progress toward graduation.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="team">
+                <div class="container">
+                    <div class="section-title">
+                        <h2>Meet the Team</h2>
+                        <p>
+                            This project was developed collaboratively, with each team member contributing to a specific
+                            part of the chatbot experience.
+                        </p>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card team-card">
+                            <h4>Phyo</h4>
+                            <div class="team-role">Team Lead • Advising • Career Guidance</div>
+                            <p>Worked on advising support, career pathways, alumni insight, and transfer-related
+                                guidance while also coordinating communication, scheduling, and project progress.</p>
+                        </div>
+                        <div class="card team-card">
+                            <h4>Yeffry</h4>
+                            <div class="team-role">Advising Controller</div>
+                            <p>Built logic that connects a student profile to the curriculum so completed courses can be
+                                filtered and a more customized path to graduation can be shown.</p>
+                        </div>
+                        <div class="card team-card">
+                            <h4>Dylan</h4>
+                            <div class="team-role">Course History Tracking</div>
+                            <p>Developed the completed-course history feature so students can save courses to a file and
+                                better track what they have already finished.</p>
+                        </div>
+                        <div class="card team-card">
+                            <h4>Ramim</h4>
+                            <div class="team-role">Internship & Research Modules</div>
+                            <p>Organized internship and research information into clear C++ modules so students can
+                                quickly explore opportunities and understand requirements.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="future">
+                <div class="container">
+                    <div class="showcase">
+                        <h2 style="margin-bottom:14px; font-size:clamp(2rem,3vw,3rem);">Future Vision</h2>
+                        <p>
+                            We want to keep improving this project by creating a stronger user interface, expanding it
+                            into a web and mobile-friendly platform, and eventually integrating an LLM for more dynamic,
+                            personalized, and human-like interaction.
+                        </p>
+                        <p>
+                            In the long term, this concept could grow beyond GIS and become a broader advising resource
+                            for CS, CIS, and eventually all BMCC students across different majors.
+                        </p>
+                        <div class="btn-row" style="justify-content:center; margin-top:12px;">
+                            <a href="#overview" class="btn btn-primary">Back to Top</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                GIS Advising App • BMCC Student Project • Built through teamwork, problem-solving, and a shared goal to
+                improve student support<br />
+                Special thanks to Professor Azhar for the opportunity and guidance.
+            </div>
         </footer>
     </body>
 
