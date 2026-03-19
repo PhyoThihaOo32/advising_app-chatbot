@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>GIS Advising App</title>
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+                background: linear-gradient(135deg, #07111f 0%, #0c1f35 45%, #12385a 100%);
+                color: #f5f7fb;
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+
+            .bg-glow {
+                position: fixed;
+                inset: 0;
+                pointer-events: none;
+                background:
+                    radial-gradient(circle at 15% 20%, rgba(88, 196, 255, 0.22), transparent 25%),
+                    radial-gradient(circle at 80% 18%, rgba(102, 126, 234, 0.24), transparent 22%),
+                    radial-gradient(circle at 75% 70%, rgba(0, 255, 204, 0.15), transparent 25%),
+                    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.08), transparent 18%);
+                z-index: 0;
+            }
+
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 20;
+                backdrop-filter: blur(10px);
+                background: rgba(5, 14, 25, 0.55);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            }
+
+            .nav {
+                width: min(1180px, 92%);
+                margin: auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 18px 0;
+            }
+
+            .logo {
+                font-size: 1.35rem;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+            }
+
+            .logo span {
+                color: #7bdcff;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 24px;
+                list-style: none;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #e8f0ff;
+                font-size: 0.95rem;
+                transition: 0.25s;
+            }
+
+            .nav-links a:hover {
+                color: #7bdcff;
+            }
+
+            .hero {
+                position: relative;
+                z-index: 1;
+                width: min(1180px, 92%);
+                margin: 0 auto;
+                min-height: 92vh;
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                align-items: center;
+                gap: 40px;
+                padding: 40px 0 20px;
+            }
+
+            .hero-text h1 {
+                font-size: clamp(2.6rem, 5vw, 5rem);
+                line-height: 1.05;
+                margin-bottom: 18px;
+            }
+
+            .hero-text h1 span {
+                color: #7bdcff;
+                text-shadow: 0 0 18px rgba(123, 220, 255, 0.4);
+            }
+
+            .hero-text p {
+                font-size: 1.08rem;
+                color: #d7e2f3;
+                max-width: 640px;
+                line-height: 1.75;
+                margin-bottom: 28px;
+            }
+
+            .btn-group {
+                display: flex;
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                padding: 14px 24px;
+                border-radius: 999px;
+                text-decoration: none;
+                font-weight: 700;
+                transition: 0.28s ease;
+                display: inline-block;
+            }
+
+            .btn-primary {
+                background: linear-gradient(90deg, #55d8ff, #4df2c2);
+                color: #08111c;
+                box-shadow: 0 10px 28px rgba(85, 216, 255, 0.25);
+            }
+
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 14px 32px rgba(85, 216, 255, 0.35);
+            }
+
+            .btn-secondary {
+                border: 1px solid rgba(255, 255, 255, 0.18);
+                color: #f0f7ff;
+                background: rgba(255, 255, 255, 0.04);
+            }
+
+            .btn-secondary:hover {
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateY(-3px);
+            }
+
+            .hero-card {
+                position: relative;
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 28px;
+                padding: 26px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.28);
+                backdrop-filter: blur(14px);
+                overflow: hidden;
+            }
+
+            .hero-card::before {
+                content: "";
+                position: absolute;
+                width: 220px;
+                height: 220px;
+                background: radial-gradient(circle, rgba(123, 220, 255, 0.35), transparent 70%);
+                top: -50px;
+                right: -50px;
+                border-radius: 50%;
+            }
+
+            .chat-window {
+                position: relative;
+                z-index: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .bot-title {
+                font-size: 1.15rem;
+                font-weight: bold;
+                margin-bottom: 8px;
+                color: #7bdcff;
+            }
+
+            .bubble {
+                max-width: 88%;
+                padding: 14px 16px;
+                border-radius: 18px;
+                line-height: 1.55;
+                font-size: 0.96rem;
+            }
+
+            .bot {
+                background: rgba(123, 220, 255, 0.16);
+                border: 1px solid rgba(123, 220, 255, 0.18);
+                align-self: flex-start;
+            }
+
+            .user {
+                background: rgba(255, 255, 255, 0.08);
+                border: 1px solid rgba(255, 255, 255, 0.09);
+                align-self: flex-end;
+            }
+
+            .stats {
+                width: min(1180px, 92%);
+                margin: 10px auto 60px;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 18px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .stat {
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 22px;
+                padding: 24px;
+                text-align: center;
+                backdrop-filter: blur(10px);
+            }
+
+            .stat h3 {
+                font-size: 2rem;
+                color: #7bdcff;
+                margin-bottom: 8px;
+            }
+
+            .section {
+                width: min(1180px, 92%);
+                margin: 0 auto 80px;
+                position: relative;
+                z-index: 1;
+            }
+
+            .section-title {
+                text-align: center;
+                margin-bottom: 34px;
+            }
+
+            .section-title h2 {
+                font-size: clamp(2rem, 3vw, 3rem);
+                margin-bottom: 10px;
+            }
+
+            .section-title p {
+                color: #d1deef;
+                max-width: 780px;
+                margin: auto;
+                line-height: 1.7;
+            }
+
+            .grid-3 {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 22px;
+            }
+
+            .card {
+                background: rgba(255, 255, 255, 0.06);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 24px;
+                padding: 26px;
+                box-shadow: 0 18px 40px rgba(0, 0, 0, 0.15);
+                transition: 0.3s ease;
+            }
+
+            .card:hover {
+                transform: translateY(-8px);
+                border-color: rgba(123, 220, 255, 0.35);
+            }
+
+            .card h3 {
+                margin-bottom: 10px;
+                color: #7bdcff;
+            }
+
+            .card p {
+                color: #d7e2f3;
+                line-height: 1.7;
+            }
+
+            .cta {
+                text-align: center;
+                padding: 46px 26px;
+                background: linear-gradient(135deg, rgba(123, 220, 255, 0.12), rgba(77, 242, 194, 0.08));
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 28px;
+                backdrop-filter: blur(12px);
+            }
+
+            .cta h2 {
+                font-size: clamp(2rem, 3.4vw, 3rem);
+                margin-bottom: 14px;
+            }
+
+            .cta p {
+                max-width: 760px;
+                margin: 0 auto 22px;
+                line-height: 1.75;
+                color: #d8e5f7;
+            }
+
+            footer {
+                text-align: center;
+                padding: 28px 20px 40px;
+                color: #b9c8df;
+                font-size: 0.95rem;
+                position: relative;
+                z-index: 1;
+            }
+
+            @media (max-width: 980px) {
+                .hero {
+                    grid-template-columns: 1fr;
+                    padding-top: 24px;
+                }
+
+                .stats {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+
+                .grid-3 {
+                    grid-template-columns: 1fr;
+                }
+            }
+
+            @media (max-width: 680px) {
+                .nav {
+                    flex-direction: column;
+                    gap: 12px;
+                }
+
+                .nav-links {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 14px;
+                }
+
+                .stats {
+                    grid-template-columns: 1fr;
+                }
+
+                .hero-text p {
+                    font-size: 1rem;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="bg-glow"></div>
+
+        <header>
+            <nav class="nav">
+                <div class="logo">GIS <span>Advising App</span></div>
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#future">Future</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-text">
+                <h1>Smart Support for <span>BMCC GIS Students</span></h1>
+                <p>
+                    A modern advising chatbot designed to help students with course planning, career pathways,
+                    alumni insight, transfer options, and internship or research opportunities — all in one place.
+                </p>
+                <div class="btn-group">
+                    <a href="#features" class="btn btn-primary">Explore Features</a>
+                    <a href="#future" class="btn btn-secondary">Project Vision</a>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="chat-window">
+                    <div class="bot-title">AI Chat Preview</div>
+                    <div class="bubble user">What classes should I take next semester for GIS?</div>
+                    <div class="bubble bot">Based on your completed courses, I can help suggest your next GIS classes
+                        and show your progress toward graduation.</div>
+                    <div class="bubble user">Can you also show career paths and transfer options?</div>
+                    <div class="bubble bot">Yes — I can guide you through GIS careers, alumni insight, transfer
+                        opportunities, and internship or research support.</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats">
+            <div class="stat">
+                <h3>62</h3>
+                <p>Credit goal support</p>
+            </div>
+            <div class="stat">
+                <h3>24/7</h3>
+                <p>On-demand guidance</p>
+            </div>
+            <div class="stat">
+                <h3>1</h3>
+                <p>Unified student hub</p>
+            </div>
+            <div class="stat">
+                <h3>∞</h3>
+                <p>Future possibilities</p>
+            </div>
+        </section>
+
+        <section class="section" id="features">
+            <div class="section-title">
+                <h2>What the App Can Do</h2>
+                <p>
+                    Our project brings together academic advising, degree planning, career exploration, and real-world
+                    opportunities into a student-friendly platform.
+                </p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Academic Advising</h3>
+                    <p>Helps students understand course pathways, degree requirements, and what classes to take next.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3>Career Guidance</h3>
+                    <p>Shows GIS-related career paths, alumni experiences, and motivation from real professionals.</p>
+                </div>
+                <div class="card">
+                    <h3>Transfer & Opportunities</h3>
+                    <p>Brings together transfer options, internship information, and research opportunities in one
+                        place.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <div class="section-title">
+                <h2>Why This Project Matters</h2>
+                <p>
+                    Advising offices are often busy, degree maps can feel confusing, and students may be unsure about
+                    their next steps. This app aims to make support clearer, faster, and easier to access.
+                </p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Less Confusion</h3>
+                    <p>Students can quickly find the information they need without feeling overwhelmed by scattered
+                        resources.</p>
+                </div>
+                <div class="card">
+                    <h3>Better Planning</h3>
+                    <p>Progress tracking and advising support help students avoid taking the wrong classes and wasting
+                        time or money.</p>
+                </div>
+                <div class="card">
+                    <h3>More Confidence</h3>
+                    <p>Career guidance, alumni insight, and transfer pathways can help students make stronger academic
+                        decisions.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="future">
+            <div class="cta">
+                <h2>The Future Vision</h2>
+                <p>
+                    We hope to turn this into a polished web and mobile-friendly experience, with more dynamic
+                    conversation features, stronger personalization, and future LLM integration. In the long term, this
+                    project could expand beyond GIS to support CS, CIS, and eventually all BMCC students across
+                    different majors.
+                </p>
+                <a href="#" class="btn btn-primary">Built for Students</a>
+            </div>
+        </section>
+
+        <footer>
+            GIS Advising App • BMCC Student Project • Designed with creativity, teamwork, and purpose
+        </footer>
+    </body>
+
+</html>
