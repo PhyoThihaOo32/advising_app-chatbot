@@ -16,10 +16,6 @@ public:
     void askForTrack();
     void askForCourseHistory();
     void askForSemester();
-    // void adviseOnClasses();
-    // void calculateCredits();
-    // void showcareerPathway();
-    // void showinterResearchopp();
     void loadSchedule(int);
     int creditsRemaining();
     Advising();

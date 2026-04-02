@@ -9,9 +9,8 @@ struct Course {
     string courseCode;
     int credits;
     string major;
-    //this is the semester in this specific track
-    int semester2Year; // 0 means not in this track
-    int semester3Year; // 0 means not in this track
+    int semester2Year;
+    int semester3Year;
     int id;
     vector<string> prerequisites;
 };

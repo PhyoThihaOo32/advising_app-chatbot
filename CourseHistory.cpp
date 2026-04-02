@@ -7,7 +7,7 @@
 using namespace std;
 
 CourseHistory::CourseHistory() {
-	filename = "completed_courses.txt";
+    filename = "completed_courses.txt";
 };
 
 bool CourseHistory::validateInput(int& input, int min, int max) {
@@ -49,55 +49,47 @@ void CourseHistory::loadCourses() {
     cout << "Loaded your saved courses.\n";
 };
 
-void CourseHistory::promptEnterCourses(Curriculum& curriculum) {
+void CourseHistory::promptEnterCourses(Curriculum& curriculum, string major) {
     cout << "======================================================\n";
 
     if (!fileExists()) {
         cout << "No saved course history found.\n";
         cout << "Would you like to enter your completed courses?\n";
-        cout << "[1] Yes\n";
-        cout << "[2] No\n";
+        cout << "[1] Yes\n" << "[2] No\n";
         
         int choice;
         cin >> choice;
-        validateInput(choice, 1, 2); // input, smallest choice, largest choice
+        validateInput(choice, 1, 2);
 
         if (choice == 1) {
-            enterCourses(curriculum);
+            enterCourses(curriculum, major); // Hand off the major here
         }
-
         return;
     }
 
-    // File exists — check if empty
     ifstream file(filename);
     file.seekg(0, ios::end);
 
     if (file.tellg() == 0) {
-        cout << "Course history file is empty.\n";
-        cout << "Please enter your completed courses.\n";
-
-        enterCourses(curriculum);
+        cout << "Course history file is empty. Please enter your completed courses.\n";
+        enterCourses(curriculum, major); // Hand off the major here
         return;
     }
-
     file.close();
 
     cout << "Saved course history detected.\n" << endl;
-    cout << "[1] Use saved courses\n";
-    cout << "[2] Update course history\n"
-    << "\nEnter your choice: ";
+    cout << "[1] Use saved courses\n" << "[2] Update course history\n\nChoice: ";
 
     int choice;
     cin >> choice;
-    validateInput(choice, 1, 2); // input, smallest choice, largest choice
+    validateInput(choice, 1, 2);
 
     if (choice == 1) {
         loadCourses();
     }
     else if (choice == 2) {
         completedCourses.clear();
-        enterCourses(curriculum);
+        enterCourses(curriculum, major); // Hand off the major here
     }
 }
 
@@ -109,29 +101,49 @@ bool CourseHistory::validateCourse(string course) {
     return valid;
 }
 
-void CourseHistory::enterCourses(Curriculum& curriculum) {
+//void CourseHistory::enterCourses(Curriculum& curriculum) {
+//    cout << "\n--- Quick History Setup ---\n";
+//    cout << "Type '1' for Yes (Completed) or '0' for No (Not Taken)\n\n";
+//
+//    for (int i = 0; i < curriculum.gisCourses.size(); i++) {
+//        int response;
+//        cout << "Did you finish " << curriculum.gisCourses[i].courseCode
+//            << " - [" << curriculum.gisCourses[i].courseName << "]? [1=Yes, 0=No]: ";
+//
+//        cin >> response;
+//        validateInput(response, 0, 1); // input, smallest choice, largest choice
+//
+//        if (response == 1) {
+//            completedCourses.push_back(curriculum.gisCourses[i].courseCode);
+//            cout << ">> Recorded.\n";
+//        }
+//        else {
+//            cout << "Invalid input. Please enter '1' for Yes or '0' for No.\n";
+//        }
+//    }
+//
+//    saveCourses();
+//    cout << "\nAll done! Your history is saved.\n";
+//}
+// Update the function signature in .h and .cpp to include 'string major'
+void CourseHistory::enterCourses(Curriculum& curriculum, string major) {
     cout << "\n--- Quick History Setup ---\n";
-    cout << "Type '1' for Yes (Completed) or '0' for No (Not Taken)\n\n";
-
     for (int i = 0; i < curriculum.gisCourses.size(); i++) {
-        int response;
-        cout << "Did you finish " << curriculum.gisCourses[i].courseCode
-            << " - [" << curriculum.gisCourses[i].courseName << "]? [1=Yes, 0=No]: ";
-        
-        cin >> response;
-        validateInput(response, 0, 1); // input, smallest choice, largest choice
+        // ONLY ask if the course belongs to the student's major
+        if (curriculum.gisCourses[i].major == major) {
+            int response;
+            cout << "Did you finish " << curriculum.gisCourses[i].courseCode
+                << " - [" << curriculum.gisCourses[i].courseName << "]? [1=Yes, 0=No]: ";
+            
+            cin >> response;
+            validateInput(response, 0, 1);
 
-        if (response == 1) {
-            completedCourses.push_back(curriculum.gisCourses[i].courseCode);
-            cout << ">> Recorded.\n";
-        }
-        else {
-            cout << "Invalid input. Please enter '1' for Yes or '0' for No.\n";
+            if (response == 1) {
+                completedCourses.push_back(curriculum.gisCourses[i].courseCode);
+            }
         }
     }
-
     saveCourses();
-    cout << "\nAll done! Your history is saved.\n";
 }
 
 void CourseHistory::saveCourses() {
@@ -157,3 +169,4 @@ bool CourseHistory::hasCompleted(string course) {
 vector<string> CourseHistory::getCourses() {
     return completedCourses;
 };
+

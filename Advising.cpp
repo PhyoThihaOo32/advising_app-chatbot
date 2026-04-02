@@ -18,7 +18,7 @@ bool Advising::validateInput(int& input, int min, int max) {
         }
         else {
             cout << "Invalid input. Please enter a number between ("
-                << min << "-" << max << "): ";
+            << min << "-" << max << "): ";
             cin >> input;
         }
     }
@@ -33,16 +33,16 @@ void Advising::conversationController() {
     << "What can I help you with today?\n" << endl
     << "[1] What classes do I need to take next semester?\n"
     << "[2] How many credits do I still need to graduate?\n"
-//    << "[0] Exit program\n"
+    //    << "[0] Exit program\n"
     << "\nEnter your choice: ";
     cin >> command;
     validateInput(command, 1, 2); // input, smallest choice, largest choice
-
+    
     askForMajor();
     askForTrack();
     askForCourseHistory();
     askForSemester();
-
+    
     if(command == 1) {
         loadSchedule(command);
     } else if (command == 2) {
@@ -54,33 +54,50 @@ void Advising::conversationController() {
 
 int Advising::creditsRemaining() {
     cout << "======================================================\n";
+    
+    // 1. Get the major name (which is already a word)
+    string targetMajor = student.getMajor();
+
     int totalCreditsRemaining = 0;
     
     for (int i = 0; i < curriculum.gisCourses.size(); i++) {
-        // ONLY count credits if the course is NOT in the history
-        if (!student.getCourseHistory().hasCompleted(curriculum.gisCourses[i].courseCode)) {
-            totalCreditsRemaining += curriculum.gisCourses[i].credits;
+        // 2. Compare the word from the course to the word from the student
+        if (curriculum.gisCourses[i].major == targetMajor) {
+            if (!student.getCourseHistory().hasCompleted(curriculum.gisCourses[i].courseCode)) {
+                totalCreditsRemaining += curriculum.gisCourses[i].credits;
+            }
         }
     }
+    
     cout << "Credits Remaining to Graduate: " << totalCreditsRemaining << endl;
     return 0;
 }
 
 void Advising::loadSchedule(int command) {
     cout << "======================================================\n";
+    
+    // getMajor() returns a string, so we just use it directly!
+    string targetMajor = student.getMajor();
+    
     int chosenTrack = student.getTrack();
     int currentSemester = student.getSemester();
+    
     for (int i = 0; i < curriculum.gisCourses.size(); i++) {
-        int courseSemester;
-        if (chosenTrack == 2) {
-            courseSemester = curriculum.gisCourses[i].semester2Year;
-        } else {
-            courseSemester = curriculum.gisCourses[i].semester3Year;
-        }
-
-        if (courseSemester == currentSemester + 1 && !student.getCourseHistory().hasCompleted(curriculum.gisCourses[i].courseCode)) {
-            cout << " * " << curriculum.gisCourses[i].courseCode << " " << curriculum.gisCourses[i].courseName
-                << " (" << curriculum.gisCourses[i].credits << " credits)" << endl;
+        // Filter by major first
+        if (curriculum.gisCourses[i].major == targetMajor) {
+            
+            // 1 = 2-Year Track, 2 = 3-Year Track
+            int courseSemester = (chosenTrack == 1) ?
+            curriculum.gisCourses[i].semester2Year :
+            curriculum.gisCourses[i].semester3Year;
+            
+            if (courseSemester == currentSemester + 1 &&
+                !student.getCourseHistory().hasCompleted(curriculum.gisCourses[i].courseCode)) {
+                
+                cout << " * " << curriculum.gisCourses[i].courseCode << " "
+                << curriculum.gisCourses[i].courseName << " ("
+                << curriculum.gisCourses[i].credits << " credits)" << endl;
+            }
         }
     }
 }
@@ -96,7 +113,7 @@ void Advising::askForMajor() {
     << "\nEnter your choice: ";
     cin >> major;
     validateInput(major, 1, 4); // input, smallest choice, largest choice
-
+    
     student.setMajor(major);
 }
 
@@ -108,19 +125,18 @@ void Advising::askForTrack() {
     << "Are you following the accelerated 2-year track or the standard 3-year track?\n" << endl
     
     << "[1] 2-Year Track (4 Semesters)\n"
-    << "[2] 3-Year Track (5 Semesters)\n" 
+    << "[2] 3-Year Track (5 Semesters)\n"
     << "\nEnter your choice: ";
     cin >> track;
     validateInput(track, 1, 2); // input, smallest choice, largest choice
-
+    
     student.setTrack(track);
 }
 
 void Advising::askForCourseHistory() {
     CourseHistory& history = student.getCourseHistory();
-    history.promptEnterCourses(curriculum);
+    history.promptEnterCourses(curriculum, student.getMajor());
 }
-
 void Advising::askForSemester() {
     int semester;
     cout << "======================================================\n"
@@ -133,9 +149,10 @@ void Advising::askForSemester() {
     << "\nEnter your choice: ";
     cin >> semester;
     validateInput(semester, 1, 4); // input, smallest choice, largest choice
-
+    
     student.setSemester(semester);
 }
+
 
 
 
