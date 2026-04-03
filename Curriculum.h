@@ -11,7 +11,6 @@ struct Course {
     string major;
     int semester2Year;
     int semester3Year;
-    int id;
     vector<string> prerequisites;
 };
 
