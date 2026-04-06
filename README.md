@@ -1,6 +1,6 @@
-# GIS Advising App
+# BMCC CS Advising App
 
-The **GIS Advising App** is a C++ chatbot project designed to support **BMCC Geographic Information Science (GIS) students** with academic advising, career pathway guidance, alumni insight, transfer options, and internship or research opportunities.
+The **BMCC CS Advising App** is a C++ chatbot project designed to support students across BMCC CS-related programs, including **Computer Information Systems, Computer Network Technology, Computer Science, Geographic Information Science (GIS), and Cybersecurity Certificate**, with academic advising, career pathway guidance, alumni insight, transfer options, and internship or research opportunities.
 
 This project was developed as part of a **mini-project Ideakathon** and focuses on making important student support information easier to access and understand.
 
@@ -10,7 +10,7 @@ This project was developed as part of a **mini-project Ideakathon** and focuses 
 
 Many students face challenges when trying to plan their academic path. Advising offices can be busy, degree maps may be confusing, and students are often unsure which classes to take next. In addition, students may need clearer guidance about career pathways, transfer opportunities, and experiential learning options such as internships and research.
 
-The GIS Advising App was created to help address these challenges through an on-demand chatbot assistant built in C++.
+The BMCC CS Advising App was created to help address these challenges through an on-demand chatbot assistant built in C++.
 
 ---
 
