@@ -59,15 +59,17 @@ GIS-Advising-App/
 │
 ├── Advising.cpp
 ├── Advising.h
-├── alumni.txt
 ├── Career.cpp
 ├── Career.h
-├── career_paths.txt
-├── completed_courses.txt
 ├── CourseHistory.cpp
 ├── CourseHistory.h
 ├── Curriculum.cpp
 ├── Curriculum.h
+├── data/
+│   ├── alumni.txt
+│   ├── career_paths.txt
+│   ├── completed_courses.txt
+│   └── transfer_options.txt
 ├── Internship.cpp
 ├── Internship.h
 ├── main
@@ -76,19 +78,18 @@ GIS-Advising-App/
 ├── Research.h
 ├── Student.cpp
 ├── Student.h
-├── transfer_options.txt
 ├── TransferOption.cpp
 └── TransferOption.h
 ```
 
 ## Data File Format (Career/Transfer/Alumni)
 
-- `career_paths.txt`
+- `data/career_paths.txt`
   - `major|<major name>`
   - `career|<career pathway>`
   - `===` ends one major section
 
-- `transfer_options.txt`
+- `data/transfer_options.txt`
   - `major|<major name>`
   - `college|<college/pathway name>`
   - `degree|<degree/pathway>`
@@ -96,7 +97,7 @@ GIS-Advising-App/
   - `---` ends one college block
   - `===` ends one major section
 
-- `alumni.txt`
+- `data/alumni.txt`
   - `major|<major name>`
   - `name|<alumni name>`
   - `background|<academic background>`

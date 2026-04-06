@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Career::Career() : careerFile("career_paths.txt"), alumniFile("alumni.txt")
+Career::Career() : careerFile("data/career_paths.txt"), alumniFile("data/alumni.txt")
 {
     loadCareerFromFile();
     loadAlumniFromFile();

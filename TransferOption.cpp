@@ -4,7 +4,7 @@
 
 using namespace std;
 
-TransferOption::TransferOption() : pendingMajor("Geographic Information Science (GIS)"), transferFile("transfer_options.txt")
+TransferOption::TransferOption() : pendingMajor("Geographic Information Science (GIS)"), transferFile("data/transfer_options.txt")
 {
     loadTransferOptionsFromFile();
 }

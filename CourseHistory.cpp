@@ -7,7 +7,7 @@
 using namespace std;
 
 CourseHistory::CourseHistory() {
-    filename = "completed_courses.txt";
+	filename = "data/completed_courses.txt";
 };
 
 bool CourseHistory::validateInput(int& input, int min, int max) {
