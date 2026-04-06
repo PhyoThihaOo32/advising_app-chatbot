@@ -1,126 +1,476 @@
 // implementation file for Career class
 #include "Career.h"
+#include <fstream>
 #include <iostream>
 
 using namespace std;
 
-Career::Career()
+Career::Career() : careerFile("career_paths.txt"), alumniFile("alumni.txt")
 {
-    // initialize career paths
-    career = {
-        "Health and Human Services",
-        "Manufacturing",
-        "Sustainability",
-        "Transportation",
-        "Government",
-        "Real Estate",
-        "Emergency and Public Safety",
-        "Natural Resource Management",
-        "Business Intelligence Using Location Analytics",
-        "Crime Mapping and Hot Spot Analysis"};
+    loadCareerFromFile();
+    loadAlumniFromFile();
+}
 
-    // alumni data
-    alumni.push_back({"Bruno Luna",
-                      "A.S. Geographic Information Science (GIS), BMCC (2019)",
-                      "Unmanned Aerial Systems (UAS) Program Coordinator for Flagler County, Florida. "
-                      "Supports drone missions and collaborates with GIS teams for mapping.",
-                      "https://www.linkedin.com/in/bruno-luna43/",
-                      "Explore industries you enjoy and discover how GIS can be applied in those fields."});
+string Career::encode(const string &text)
+{
+    string encoded;
+    for (char c : text)
+    {
+        if (c == '\\')
+        {
+            encoded += "\\\\";
+        }
+        else if (c == '\n')
+        {
+            encoded += "\\n";
+        }
+        else
+        {
+            encoded += c;
+        }
+    }
+    return encoded;
+}
 
-    alumni.push_back({"Naisiaae Kenana",
-                      "A.S. Geographic Information Science (GIS), BMCC (2017)\n"
-                      "B.A. Geography and Geographic Information Science, Hunter College (2019)",
-                      "GIS Technician for the Government of Kenya, Nairobi County.\n"
-                      "Works on surveying policy review, cadastral and boundary surveys, geospatial "
-                      "technology research, map production, and technical reporting.",
-                      "https://www.linkedin.com/in/naisiaae-k-b19618116/",
-                      "GIS is used in many fields including environmental science, urban planning, "
-                      "healthcare, and business analytics. Gain experience through projects, "
-                      "internships, and professional networking."});
-    alumni.push_back({"Juan F. Martinez",
-                      "A.S. Multimedia Programming and Design, BMCC (2017); "
-                      "B.A. Sustainable Development, Columbia University (2020); "
-                      "MPA Urban Studies, Columbia University (2025)",
-                      "Senior Staff Research Assistant at CIESIN, Columbia Climate School, Columbia University. "
-                      "Works with GIS products, spatial data analysis, and research support for scientists and research teams.",
-                      "https://www.linkedin.com/in/juan-f-martinez-aba3854a/",
-                      "Develop strong data analysis and GIS skills. Sustainability and spatial data science are growing fields."});
-    alumni.push_back({"Jocelyn Rajaballey",
-                      "A.S. Public Health, BMCC (2021); "
-                      "B.S. Urban Health Geography, Lehman College (2021); "
-                      "GIS Certificate, Lehman College (2022)",
-                      "City Service Corps member at NYC Emergency Management. "
-                      "Works on community engagement data and GIS mapping for research and public safety.",
-                      "https://www.linkedin.com/in/jocelyn-rajaballey/",
-                      "GIS can be applied to public health, urban planning, and community research."});
-    alumni.push_back({"Jada Grandchamps",
-                      "A.S. Environmental Science, BMCC (2017); "
-                      "B.A. Environmental Earth Science, City College (2019); "
-                      "M.S. Geography, Hunter College (2021)",
-                      "Field Hydrogeologist at PW Grosser working on environmental and geospatial studies.",
-                      "https://www.linkedin.com/in/jada-grandchamps-567a0a141/",
-                      "GIS plays an important role in environmental science and ecological research."});
-    alumni.push_back({"Lisa S. Palmer",
-                      "A.S. Geographic Information Science, BMCC; "
-                      "B.A. Geography and GIS, Hunter College (2017)",
-                      "Career Advisor in the BMCC Computer Information Systems Department "
-                      "helping students find internships, apprenticeships, and careers.",
-                      "https://www.linkedin.com/in/lspalmer",
-                      "The GIS workforce is small, so start networking early and attend GIS events."});
-    alumni.push_back({"Pizeme Tchara",
-                      "A.S. Multimedia Programming/Computer Programming, BMCC (2008); "
-                      "B.A. Communications and Media Studies/Computer Programming, NYU (2012); "
-                      "M.S. Geographic Information Science and Cartography, Lehman College (2019)",
-                      "Emergency Management Specialist and Geospatial Data Analyst at FEMA.",
-                      "https://www.linkedin.com/in/pizeme/",
-                      "GIS combines well with programming, statistics, and data analysis."});
-    alumni.push_back({"Alexandrea Fortin",
-                      "A.A. Liberal Arts, BMCC (1998); "
-                      "B.A. English/Geology, Queens College (2010); "
-                      "M.S. Geology and GIS, University of Rhode Island (2013)",
-                      "Works in environmental science performing surveys, sampling, and environmental reporting.",
-                      "https://www.linkedin.com/in/alexandrea-fortin-b0449720/",
-                      "GIS is widely used in environmental science, government, and mapping industries."});
-    alumni.push_back({"Juanita Corea",
-                      "A.A. Liberal Arts, BMCC; "
-                      "BSc Oceanography, University of Washington; "
-                      "MSc Geographic Information Science, University of Denver",
-                      "PhD student in Geography and Geoinformatics with over 20 years of professional "
-                      "experience in geospatial analysis and cartography.",
-                      "https://www.linkedin.com/in/juanita-corea-map-lady/",
-                      "Combine GIS with other fields such as urban planning, conservation, disaster "
-                      "management, or database systems."});
+string Career::decode(const string &text)
+{
+    string decoded;
+    bool escapeMode = false;
+
+    for (char c : text)
+    {
+        if (escapeMode)
+        {
+            if (c == 'n')
+            {
+                decoded += '\n';
+            }
+            else
+            {
+                decoded += c;
+            }
+            escapeMode = false;
+        }
+        else if (c == '\\')
+        {
+            escapeMode = true;
+        }
+        else
+        {
+            decoded += c;
+        }
+    }
+
+    if (escapeMode)
+    {
+        decoded += '\\';
+    }
+
+    return decoded;
+}
+
+bool Career::splitKeyValue(const string &line, string &key, string &value)
+{
+    size_t delimiter = line.find('\t');
+    size_t offset = 1;
+
+    if (delimiter == string::npos)
+    {
+        delimiter = line.find("\\t");
+        offset = 2;
+    }
+
+    if (delimiter == string::npos)
+    {
+        delimiter = line.find('|');
+        offset = 1;
+    }
+
+    if (delimiter == string::npos)
+    {
+        return false;
+    }
+
+    key = line.substr(0, delimiter);
+    value = decode(line.substr(delimiter + offset));
+    return true;
+}
+
+void Career::loadCareerFromFile()
+{
+    careerByMajor.clear();
+
+    ifstream file(careerFile);
+    if (!file.is_open())
+    {
+        return;
+    }
+
+    MajorCareerPath currentMajor;
+    string line;
+    while (getline(file, line))
+    {
+        if (line == "===")
+        {
+            if (!currentMajor.major.empty())
+            {
+                careerByMajor.push_back(currentMajor);
+            }
+            currentMajor = MajorCareerPath();
+            continue;
+        }
+
+        if (line.empty())
+        {
+            continue;
+        }
+
+        string key;
+        string value;
+        if (!splitKeyValue(line, key, value))
+        {
+            continue;
+        }
+
+        if (key == "major")
+        {
+            if (!currentMajor.major.empty())
+            {
+                careerByMajor.push_back(currentMajor);
+            }
+
+            currentMajor = MajorCareerPath();
+            currentMajor.major = value;
+        }
+        else if (key == "career" && !currentMajor.major.empty())
+        {
+            currentMajor.careers.push_back(value);
+        }
+    }
+
+    if (!currentMajor.major.empty())
+    {
+        careerByMajor.push_back(currentMajor);
+    }
+}
+
+void Career::saveCareerToFile() const
+{
+    ofstream file(careerFile);
+    for (const MajorCareerPath &majorEntry : careerByMajor)
+    {
+        file << "major\t" << encode(majorEntry.major) << '\n';
+        for (const string &careerPath : majorEntry.careers)
+        {
+            file << "career\t" << encode(careerPath) << '\n';
+        }
+        file << "===\n";
+    }
+}
+
+MajorCareerPath *Career::findMajorCareer(const string &major)
+{
+    for (MajorCareerPath &entry : careerByMajor)
+    {
+        if (entry.major == major)
+        {
+            return &entry;
+        }
+    }
+    return nullptr;
+}
+
+const MajorCareerPath *Career::findMajorCareer(const string &major) const
+{
+    for (const MajorCareerPath &entry : careerByMajor)
+    {
+        if (entry.major == major)
+        {
+            return &entry;
+        }
+    }
+    return nullptr;
+}
+
+MajorAlumniProfile *Career::findMajorAlumni(const string &major)
+{
+    for (MajorAlumniProfile &entry : alumniByMajor)
+    {
+        if (entry.major == major)
+        {
+            return &entry;
+        }
+    }
+    return nullptr;
+}
+
+const MajorAlumniProfile *Career::findMajorAlumni(const string &major) const
+{
+    for (const MajorAlumniProfile &entry : alumniByMajor)
+    {
+        if (entry.major == major)
+        {
+            return &entry;
+        }
+    }
+    return nullptr;
+}
+
+void Career::loadAlumniFromFile()
+{
+    alumniByMajor.clear();
+
+    ifstream file(alumniFile);
+    if (!file.is_open())
+    {
+        return;
+    }
+
+    MajorAlumniProfile currentMajor;
+    Alumni current;
+    bool hasAlumniData = false;
+    string line;
+
+    while (getline(file, line))
+    {
+        if (line == "===")
+        {
+            if (hasAlumniData && !currentMajor.major.empty())
+            {
+                currentMajor.alumni.push_back(current);
+                current = Alumni();
+                hasAlumniData = false;
+            }
+
+            if (!currentMajor.major.empty())
+            {
+                alumniByMajor.push_back(currentMajor);
+            }
+            currentMajor = MajorAlumniProfile();
+            continue;
+        }
+
+        if (line == "---")
+        {
+            if (hasAlumniData && !currentMajor.major.empty())
+            {
+                currentMajor.alumni.push_back(current);
+            }
+            current = Alumni();
+            hasAlumniData = false;
+            continue;
+        }
+
+        if (line.empty())
+        {
+            continue;
+        }
+
+        string key;
+        string value;
+        if (!splitKeyValue(line, key, value))
+        {
+            continue;
+        }
+
+        if (key == "name")
+        {
+            current.name = value;
+            hasAlumniData = true;
+        }
+        else if (key == "major")
+        {
+            if (hasAlumniData && !currentMajor.major.empty())
+            {
+                currentMajor.alumni.push_back(current);
+                current = Alumni();
+                hasAlumniData = false;
+            }
+
+            if (!currentMajor.major.empty() && currentMajor.major != value)
+            {
+                alumniByMajor.push_back(currentMajor);
+                currentMajor = MajorAlumniProfile();
+            }
+
+            currentMajor.major = value;
+        }
+        else if (key == "background")
+        {
+            current.background = value;
+            hasAlumniData = true;
+        }
+        else if (key == "update")
+        {
+            current.update = value;
+            hasAlumniData = true;
+        }
+        else if (key == "linkedin")
+        {
+            current.linkedin = value;
+            hasAlumniData = true;
+        }
+        else if (key == "advice")
+        {
+            current.advice = value;
+            hasAlumniData = true;
+        }
+    }
+
+    if (hasAlumniData && !currentMajor.major.empty())
+    {
+        currentMajor.alumni.push_back(current);
+    }
+
+    if (!currentMajor.major.empty())
+    {
+        alumniByMajor.push_back(currentMajor);
+    }
+}
+
+void Career::saveAlumniToFile() const
+{
+    ofstream file(alumniFile);
+    for (const MajorAlumniProfile &majorEntry : alumniByMajor)
+    {
+        file << "major\t" << encode(majorEntry.major) << '\n';
+
+        for (const Alumni &a : majorEntry.alumni)
+        {
+            file << "name\t" << encode(a.name) << '\n';
+            file << "background\t" << encode(a.background) << '\n';
+            file << "update\t" << encode(a.update) << '\n';
+            file << "linkedin\t" << encode(a.linkedin) << '\n';
+            file << "advice\t" << encode(a.advice) << '\n';
+            file << "---\n";
+        }
+
+        file << "===\n";
+    }
 }
 
 // add new career pathway
 void Career::setCareer(string c)
 {
-    career.push_back(c);
+    setCareer("Geographic Information Science (GIS)", c);
 }
 
-// display career paths
+void Career::setCareer(const string &major, const string &careerPath)
+{
+    MajorCareerPath *majorEntry = findMajorCareer(major);
+    if (majorEntry == nullptr)
+    {
+        MajorCareerPath newMajor;
+        newMajor.major = major;
+        newMajor.careers.push_back(careerPath);
+        careerByMajor.push_back(newMajor);
+    }
+    else
+    {
+        majorEntry->careers.push_back(careerPath);
+    }
+
+    saveCareerToFile();
+}
+
+// display GIS career paths
 void Career::showCareer() const
 {
+    showCareer("Geographic Information Science (GIS)");
+}
+
+// display career paths by major
+void Career::showCareer(const string &major) const
+{
     cout << "\n========================\n";
-    cout << "     GIS CAREER PATHS\n";
+    cout << "     CAREER PATHWAYS\n";
     cout << "========================\n\n";
 
-    cout << "GIS is used in many industries including law enforcement, " << endl
-         << "urban planning, environmental science, healthcare, " << endl
-         << "transportation, and business analytics.\n\n";
+    cout << "Major/Program: " << major << "\n\n";
 
-    for (const string &c : career)
+    const MajorCareerPath *majorEntry = findMajorCareer(major);
+    if (majorEntry == nullptr || majorEntry->careers.empty())
     {
-        cout << "- " << c << endl;
+        cout << "No career pathway data is available for this major yet.\n\n";
+        return;
+    }
+
+    for (const string &careerPath : majorEntry->careers)
+    {
+        cout << "- " << careerPath << endl;
     }
 
     cout << endl;
 }
 
+void Career::showCareerNumbered(const string &major) const
+{
+    cout << "\n========================\n";
+    cout << " CAREER PATHWAYS (ADMIN)\n";
+    cout << "========================\n\n";
+
+    cout << "Major/Program: " << major << "\n\n";
+
+    const MajorCareerPath *majorEntry = findMajorCareer(major);
+    if (majorEntry == nullptr || majorEntry->careers.empty())
+    {
+        cout << "No career pathway data is available for this major yet.\n\n";
+        return;
+    }
+
+    for (size_t i = 0; i < majorEntry->careers.size(); i++)
+    {
+        cout << i + 1 << ". " << majorEntry->careers[i] << endl;
+    }
+
+    cout << endl;
+}
+
+bool Career::removeCareer(const string &major, int oneBasedIndex)
+{
+    if (oneBasedIndex <= 0)
+    {
+        return false;
+    }
+
+    for (size_t i = 0; i < careerByMajor.size(); i++)
+    {
+        if (careerByMajor[i].major == major)
+        {
+            vector<string> &careers = careerByMajor[i].careers;
+            if (oneBasedIndex > static_cast<int>(careers.size()))
+            {
+                return false;
+            }
+
+            careers.erase(careers.begin() + (oneBasedIndex - 1));
+
+            if (careers.empty())
+            {
+                careerByMajor.erase(careerByMajor.begin() + i);
+            }
+
+            saveCareerToFile();
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // add alumni interactively
 void Career::setAlumni()
 {
+    setAlumni("Geographic Information Science (GIS)");
+}
+
+void Career::setAlumni(const string &major)
+{
     Alumni alumnus;
+    if (cin.peek() == '\n')
+    {
+        cin.ignore();
+    }
 
     cout << "Name: ";
     getline(cin, alumnus.name);
@@ -137,24 +487,45 @@ void Career::setAlumni()
     cout << "Advice: ";
     getline(cin, alumnus.advice);
 
-    alumni.push_back(alumnus);
+    MajorAlumniProfile *majorEntry = findMajorAlumni(major);
+    if (majorEntry == nullptr)
+    {
+        MajorAlumniProfile newEntry;
+        newEntry.major = major;
+        newEntry.alumni.push_back(alumnus);
+        alumniByMajor.push_back(newEntry);
+    }
+    else
+    {
+        majorEntry->alumni.push_back(alumnus);
+    }
+
+    saveAlumniToFile();
 }
 
-// display alumni
+// display GIS alumni
 void Career::showAlumni() const
 {
-    string heading =
-        "Geographic Information Science (GIS) is a fast-growing field used in many areas "
-        "such as urban planning, environmental science, disaster management, public health, "
-        "and government services. Below are some BMCC alumni working in GIS-related careers.\n";
+    showAlumni("Geographic Information Science (GIS)");
+}
 
+// display alumni by major
+void Career::showAlumni(const string &major) const
+{
     cout << "\n==============================\n";
-    cout << "       BMCC GIS ALUMNI\n";
+    cout << "         BMCC ALUMNI\n";
     cout << "==============================\n\n";
 
-    cout << heading << endl;
+    cout << "Major/Program: " << major << "\n\n";
 
-    for (const Alumni &a : alumni)
+    const MajorAlumniProfile *majorEntry = findMajorAlumni(major);
+    if (majorEntry == nullptr || majorEntry->alumni.empty())
+    {
+        cout << "No alumni data is available for this major yet.\n\n";
+        return;
+    }
+
+    for (const Alumni &a : majorEntry->alumni)
     {
         cout << "---------------------------------\n";
         cout << "Name: " << a.name << endl;
@@ -166,4 +537,59 @@ void Career::showAlumni() const
         cout << "Advice: " << a.advice << endl;
         cout << endl;
     }
+}
+
+void Career::showAlumniNumbered(const string &major) const
+{
+    cout << "\n========================\n";
+    cout << "   ALUMNI LIST (ADMIN)\n";
+    cout << "========================\n\n";
+
+    cout << "Major/Program: " << major << "\n\n";
+
+    const MajorAlumniProfile *majorEntry = findMajorAlumni(major);
+    if (majorEntry == nullptr || majorEntry->alumni.empty())
+    {
+        cout << "No alumni data is available for this major yet.\n\n";
+        return;
+    }
+
+    for (size_t i = 0; i < majorEntry->alumni.size(); i++)
+    {
+        cout << i + 1 << ". " << majorEntry->alumni[i].name << endl;
+    }
+
+    cout << endl;
+}
+
+bool Career::removeAlumni(const string &major, int oneBasedIndex)
+{
+    if (oneBasedIndex <= 0)
+    {
+        return false;
+    }
+
+    for (size_t i = 0; i < alumniByMajor.size(); i++)
+    {
+        if (alumniByMajor[i].major == major)
+        {
+            vector<Alumni> &alumni = alumniByMajor[i].alumni;
+            if (oneBasedIndex > static_cast<int>(alumni.size()))
+            {
+                return false;
+            }
+
+            alumni.erase(alumni.begin() + (oneBasedIndex - 1));
+
+            if (alumni.empty())
+            {
+                alumniByMajor.erase(alumniByMajor.begin() + i);
+            }
+
+            saveAlumniToFile();
+            return true;
+        }
+    }
+
+    return false;
 }

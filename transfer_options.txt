@@ -1,0 +1,65 @@
+major|Computer Information Systems
+college|New York City College of Technology
+degree|Bachelor's pathways for continuing undergraduate studies in technology and information systems
+activity|BMCC CIS graduates can transfer to continue undergraduate studies
+activity|Supports transition from associate-level coursework to senior college programs
+---
+college|CUNY School of Professional Studies
+degree|Bachelor's pathways for continuing undergraduate studies in information systems and related fields
+activity|Flexible transfer pathway for students continuing while balancing work and personal commitments
+activity|Extends business-focused computing preparation from BMCC CIS
+---
+===
+major|Computer Network Technology
+college|New York City College of Technology
+degree|B.Tech in Computer Systems
+activity|Direct pathway highlighted by the BMCC CNT program overview
+activity|Builds on networking, systems, and telecommunications preparation
+---
+college|Mercy College
+degree|B.S. in Cybersecurity
+activity|Transfer option highlighted by the BMCC CNT program overview
+activity|Continues advanced security and infrastructure study
+---
+===
+major|Computer Science
+college|John Jay College of Criminal Justice
+degree|Baccalaureate pathways in computer science and related areas
+activity|BMCC CS graduates can transfer seamlessly based on the CIS department overview
+activity|Continues study in computing theory, software, and applications
+---
+college|Mercy College
+degree|Baccalaureate pathways in computer science and related areas
+activity|Seamless transfer option referenced by the BMCC CS program overview
+activity|Builds on the A.S. Computer Science foundation from BMCC
+---
+===
+major|Geographic Information Science (GIS)
+college|Hunter College
+degree|BA Geography
+degree|BA Environmental Studies
+degree|BA/MA Environmental Studies and Earth Science
+degree|Post-Baccalaureate Advanced Certificate in GIS
+degree|MS GeoInformatics
+degree|MA Geography
+degree|PhD Earth and Environmental Sciences
+activity|Field trips, seminars, and GIS-focused student organizations
+activity|Geospatial mapping, sustainability, and research opportunities
+---
+college|Lehman College
+degree|MS Geographic Information Science
+degree|Graduate Certificate in GIS
+degree|Undergraduate GIS Certificate
+degree|Accelerated Bachelor's to Master's GIS Program
+activity|GIS internships and geospatial data analysis workshops
+activity|Environmental and climate-focused GIS research opportunities
+---
+===
+major|Cybersecurity Certificate
+college|BMCC CIS Department (Stackable Pathway)
+degree|A.A.S. in Computer Information Systems
+degree|A.A.S. in Computer Network Technology
+activity|Certificate credits are stackable toward BMCC A.A.S. degree programs
+activity|Students can pursue entry-level jobs, industry exams, and accelerated degree completion
+---
+===

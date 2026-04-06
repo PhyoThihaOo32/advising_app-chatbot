@@ -1,0 +1,52 @@
+major	Computer Information Systems
+career	Business Information Systems Analyst
+career	Application Support Specialist
+career	Database Support Specialist
+career	IT Project Coordinator
+career	Enterprise Systems Support Associate
+career	Help Desk / IT Support Specialist
+career	Quality Assurance Analyst
+career	Junior Business Intelligence Analyst
+===
+major	Computer Network Technology
+career	Network Administrator
+career	Network Support Specialist
+career	Systems Administrator
+career	Telecommunications Specialist
+career	Network Security Technician
+career	Infrastructure Support Technician
+career	IT Operations Analyst
+career	Technical Support Engineer
+===
+major	Computer Science
+career	Junior Software Developer
+career	Web Application Developer
+career	Quality Assurance / Test Engineer
+career	Data Analyst
+career	Junior DevOps Engineer
+career	Software Support Engineer
+career	Programming and Computer Science Tutor
+career	Application Development Associate
+===
+major	Geographic Information Science (GIS)
+career	Health and Human Services
+career	Manufacturing
+career	Sustainability
+career	Transportation
+career	Government
+career	Real Estate
+career	Emergency and Public Safety
+career	Natural Resource Management
+career	Business Intelligence Using Location Analytics
+career	Crime Mapping and Hot Spot Analysis
+===
+major	Cybersecurity Certificate
+career	Cybersecurity Analyst (Entry Level)
+career	SOC Analyst (Tier 1)
+career	Information Security Technician
+career	Vulnerability Assessment Assistant
+career	Incident Response Assistant
+career	Network Security Support Specialist
+career	Security Compliance and Awareness Associate
+career	Security Operations Technician
+===

@@ -1,0 +1,100 @@
+major|Geographic Information Science (GIS)
+name|Bruno Luna
+background|A.S. Geographic Information Science (GIS), BMCC (2019)
+update|Unmanned Aerial Systems (UAS) Program Coordinator for Flagler County, Florida. Supports drone missions and collaborates with GIS teams for mapping.
+linkedin|https://www.linkedin.com/in/bruno-luna43/
+advice|Explore industries you enjoy and discover how GIS can be applied in those fields.
+---
+name|Naisiaae Kenana
+background|A.S. Geographic Information Science (GIS), BMCC (2017)\nB.A. Geography and Geographic Information Science, Hunter College (2019)
+update|GIS Technician for the Government of Kenya, Nairobi County. Works on surveying policy review, cadastral and boundary surveys, geospatial technology research, map production, and technical reporting.
+linkedin|https://www.linkedin.com/in/naisiaae-k-b19618116/
+advice|GIS is used in many fields including environmental science, urban planning, healthcare, and business analytics. Gain experience through projects, internships, and professional networking.
+---
+name|Juan F. Martinez
+background|A.S. Multimedia Programming and Design, BMCC (2017); B.A. Sustainable Development, Columbia University (2020); MPA Urban Studies, Columbia University (2025)
+update|Senior Staff Research Assistant at CIESIN, Columbia Climate School, Columbia University. Works with GIS products, spatial data analysis, and research support for scientists and research teams.
+linkedin|https://www.linkedin.com/in/juan-f-martinez-aba3854a/
+advice|Develop strong data analysis and GIS skills. Sustainability and spatial data science are growing fields.
+---
+name|Jocelyn Rajaballey
+background|A.S. Public Health, BMCC (2021); B.S. Urban Health Geography, Lehman College (2021); GIS Certificate, Lehman College (2022)
+update|City Service Corps member at NYC Emergency Management. Works on community engagement data and GIS mapping for research and public safety.
+linkedin|https://www.linkedin.com/in/jocelyn-rajaballey/
+advice|GIS can be applied to public health, urban planning, and community research.
+---
+name|Jada Grandchamps
+background|A.S. Environmental Science, BMCC (2017); B.A. Environmental Earth Science, City College (2019); M.S. Geography, Hunter College (2021)
+update|Field Hydrogeologist at PW Grosser working on environmental and geospatial studies.
+linkedin|https://www.linkedin.com/in/jada-grandchamps-567a0a141/
+advice|GIS plays an important role in environmental science and ecological research.
+---
+name|Lisa S. Palmer
+background|A.S. Geographic Information Science, BMCC; B.A. Geography and GIS, Hunter College (2017)
+update|Career Advisor in the BMCC Computer Information Systems Department helping students find internships, apprenticeships, and careers.
+linkedin|https://www.linkedin.com/in/lspalmer
+advice|The GIS workforce is small, so start networking early and attend GIS events.
+---
+name|Pizeme Tchara
+background|A.S. Multimedia Programming/Computer Programming, BMCC (2008); B.A. Communications and Media Studies/Computer Programming, NYU (2012); M.S. Geographic Information Science and Cartography, Lehman College (2019)
+update|Emergency Management Specialist and Geospatial Data Analyst at FEMA.
+linkedin|https://www.linkedin.com/in/pizeme/
+advice|GIS combines well with programming, statistics, and data analysis.
+---
+name|Alexandrea Fortin
+background|A.A. Liberal Arts, BMCC (1998); B.A. English/Geology, Queens College (2010); M.S. Geology and GIS, University of Rhode Island (2013)
+update|Works in environmental science performing surveys, sampling, and environmental reporting.
+linkedin|https://www.linkedin.com/in/alexandrea-fortin-b0449720/
+advice|GIS is widely used in environmental science, government, and mapping industries.
+---
+name|Juanita Corea
+background|A.A. Liberal Arts, BMCC; BSc Oceanography, University of Washington; MSc Geographic Information Science, University of Denver
+update|PhD student in Geography and Geoinformatics with over 20 years of professional experience in geospatial analysis and cartography.
+linkedin|https://www.linkedin.com/in/juanita-corea-map-lady/
+advice|Combine GIS with other fields such as urban planning, conservation, disaster management, or database systems.
+---
+===
+major|Computer Science
+name|Chanthea Quinland
+background|Year of graduation: 2021; Major: Computer Science
+update|Graduated from Smith College in Spring 2023 and pursuing a Master's path in Human-Computer Interaction at Carleton University, with focus on cybersecurity education and awareness.
+linkedin|https://www.linkedin.com/in/chanthea-quinland/
+advice|Computer Science has many pathways beyond software engineering. Seek mentorship, build community, and explore the area that fits your strengths.
+---
+name|Tara Whirley
+background|Year of graduation: 2021; Major: Computer Science
+update|Full-stack Software Engineer (part-time) at BNY Mellon while completing a B.A. in Computer Science at Columbia University; transitioned from internships to engineering role.
+linkedin|https://www.linkedin.com/in/tara-whirley/
+advice|Stay active in class, ask questions, build side projects, and use mentorship/internships to grow technical and interview skills.
+---
+name|Liron Hayon
+background|Year of graduation: 2021; Major: Computer Science
+update|Software Engineer at Rivery; transferred to Columbia University and completed a bachelor's degree in Computer Science after BMCC.
+linkedin|https://www.linkedin.com/in/liron-hayon/
+advice|Be confident in your interest in technology and connect with other women in tech.
+---
+name|Britania Rose
+background|Year of graduation: 2018; Major: Computer Science
+update|Solution Engineer at General Motors with prior R&D engineering experience; completed B.S. in Computer Science and B.A. in Mathematics at SUNY Binghamton.
+linkedin|https://www.linkedin.com/in/britania-rose-272007134/
+advice|Keep an open mind because Computer Science offers many career paths.
+---
+name|Inna Yedzinovich
+background|Year of graduation: 2018; Major: Computer Science
+update|Software Engineer at J.P. Morgan; completed B.S. degree after BMCC and previously worked as software engineer in government and private-sector roles.
+linkedin|https://www.linkedin.com/in/yedzinovich/
+advice|Follow your passion, keep learning, ask for help when needed, and enjoy the process.
+---
+name|Jody Simpson
+background|Year of graduation: 2017; Major: Computer Science
+update|Software Engineer at Google; completed Computer Science degree at NYU and led social-impact technology initiatives after BMCC.
+linkedin|https://www.linkedin.com/in/simpsonjr/
+advice|Use your CS skills for both technical growth and community impact.
+---
+name|Gabriella Uwadiegwu
+background|Year of graduation: 2017; Major: Computer Science
+update|Senior Software Engineer at Carta with prior roles at Twitch, Synchrony, and Spade; also founded and led women-in-tech initiatives.
+linkedin|https://www.linkedin.com/in/gabriella-uwadiegwu/
+advice|Think big, aim high, and actively pursue top opportunities in tech.
+---
+===
