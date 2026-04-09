@@ -1,6 +1,6 @@
-#include "Advising.h"
 #include <iostream>
 #include <string>
+#include "Advising.h"
 #include "CourseHistory.h"
 
 using namespace std;
@@ -12,18 +12,29 @@ Advising::Advising(){
 bool Advising::validateInput(int& input, int min, int max) {
     bool valid = false;
     while (!valid) {
-        // Check if the input is within the valid range
-        if (input >= min and input <= max) {
+
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+            cout << "Invalid input. Please enter a number between ("
+                << min << "-" << max << "): ";
+
+            cin >> input;  // force new input here
+            continue;
+        }
+
+        if (input >= min && input <= max) {
             valid = true;
         }
         else {
             cout << "Invalid input. Please enter a number between ("
-            << min << "-" << max << "): ";
+                << min << "-" << max << "): ";
             cin >> input;
         }
     }
     return valid;
-};
+}
 
 void Advising::conversationController() {
     int command;
@@ -52,7 +63,7 @@ void Advising::conversationController() {
     }
 }
 
-int Advising::creditsRemaining() {
+/*int Advising::creditsRemaining() {
     cout << "======================================================\n";
     
     // 1. Get the major name (which is already a word)
@@ -71,9 +82,9 @@ int Advising::creditsRemaining() {
     
     cout << "Credits Remaining to Graduate: " << totalCreditsRemaining << endl;
     return 0;
-}
+}*/
 
-void Advising::loadSchedule(int command) {
+/*void Advising::loadSchedule(int command) {
     cout << "======================================================\n";
     
     // getMajor() returns a string, so we just use it directly!
@@ -94,22 +105,73 @@ void Advising::loadSchedule(int command) {
             if (courseSemester == currentSemester + 1 &&
                 !student.getCourseHistory().hasCompleted(curriculum.gisCourses[i].courseCode)) {
                 
-                cout << " * " << curriculum.gisCourses[i].courseCode << " "
+                cout << " * " << curriculum.gisCourses[i].courseCode << " - "
                 << curriculum.gisCourses[i].courseName << " ("
                 << curriculum.gisCourses[i].credits << " credits)" << endl;
             }
         }
     }
+}*/
+
+int Advising::creditsRemaining() {
+    cout << "======================================================\n";
+
+    string targetMajor = student.getMajor();
+    const vector<Course>& selectedCourses = curriculum.getCoursesForMajor(targetMajor);
+
+    int totalCreditsRemaining = 0;
+
+    for (const Course& course : selectedCourses) {
+        if (!student.getCourseHistory().hasCompleted(course.courseCode)) {
+            totalCreditsRemaining += course.credits;
+        }
+    }
+
+    cout << "Credits Remaining to Graduate: " << totalCreditsRemaining << endl;
+    return totalCreditsRemaining;
 }
+
+void Advising::loadSchedule(int command) {
+    cout << "======================================================\n";
+
+    string targetMajor = student.getMajor();
+    const vector<Course>& selectedCourses = curriculum.getCoursesForMajor(targetMajor);
+
+    int chosenTrack = student.getTrack();
+    int currentSemester = student.getSemester();
+
+    bool foundCourse = false;
+
+    for (const Course& course : selectedCourses) {
+        int courseSemester = (chosenTrack == 1)
+            ? course.semester2Year
+            : course.semester3Year;
+
+        if (courseSemester == currentSemester + 1 &&
+            !student.getCourseHistory().hasCompleted(course.courseCode)) {
+
+            cout << " * " << course.courseCode << " - "
+                << course.courseName << " ("
+                << course.credits << " credits)" << endl;
+
+            foundCourse = true;
+        }
+    }
+
+    if (!foundCourse) {
+        cout << "No courses found for your next semester." << endl;
+    }
+}
+
 void Advising::askForMajor() {
     int major;
     cout
     << "======================================================\n"
     << "Select your major:\n" << endl
-    << "[1] GIS\n"
-    << "[2] CIS (Not Working)\n"
-    << "[3] CSC (Not Working)\n"
-    << "[4] CIN (Not Working)\n"
+    << "[1] Geographic Information Science (GIS)\n"
+    << "[2] Computer Information Systems (CIS)\n"
+    << "[3] Computer Science (CSC)\n"
+    << "[4] Computer Network Technology (CNT)\n"
     << "\nEnter your choice: ";
     cin >> major;
     validateInput(major, 1, 4); // input, smallest choice, largest choice
@@ -137,10 +199,11 @@ void Advising::askForCourseHistory() {
     CourseHistory& history = student.getCourseHistory();
     history.promptEnterCourses(curriculum, student.getMajor());
 }
+
 void Advising::askForSemester() {
     int semester;
     cout << "======================================================\n"
-    << "Got it. Which semester are you currently in?\n" << endl;
+    << "Got it. Which semester are you currently in? If you are a new student please enter '0'.\n" << endl;
     cout
     << "[1] Semester 1\n"
     << "[2] Semester 2\n"
@@ -148,9 +211,13 @@ void Advising::askForSemester() {
     << "[4] Semester 4\n"
     << "\nEnter your choice: ";
     cin >> semester;
-    validateInput(semester, 1, 4); // input, smallest choice, largest choice
+    validateInput(semester, 0, 4); // input, smallest choice, largest choice
     
     student.setSemester(semester);
+}
+
+Curriculum& Advising::getCurriculum() {
+    return curriculum;
 }
 
 

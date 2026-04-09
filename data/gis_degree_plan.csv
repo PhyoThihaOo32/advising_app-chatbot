@@ -1,0 +1,20 @@
+course_name,code,credits,major,semester_in_2_year_track,semester_in_3_year_track,prerequisite
+English Composition,ENG 101,3,GIS,1,1,
+Principles in IT & Comp,CSC 101,3,GIS,1,1,
+Intermediate Algebra and Precalculus,MAT 206.5,4,GIS,1,1,
+Geology I,GLY 210,4,GIS,1,2,
+Introduction to Human Geography,GEO 100,3,GIS,1,2,
+Computer Programming I,CSC 110,4,GIS,2,2,CSC 101
+Introduction to Geographic Methods,GIS 201,4,GIS,2,3,
+Introduction to Literature,ENG 201,3,GIS,2,2,ENG 101
+Statistics,MAT 209,4,GIS,2,4,
+Database Systems I,CIS 395,3,GIS,3,3,
+Introduction to Geographic Information Science,GIS 261,3,GIS,3,4,GIS 201
+Environmental Conservation-Resource Management,GEO 226,3,GIS,3,3,
+Population Geography,GEO 241,3,GIS,4,4,
+Advanced Geographic Information Science,GIS 361,3,GIS,4,5,GIS 261
+Health Problems in the Urban Community,AFL 161,3,GIS,3,5,
+Fundamentals of Public Speaking,SPE 100,3,GIS,3,3,
+Individual and Society,XXX xxx,3,GIS,4,4,
+U.S. Experience in Its Diversity,XXX xxx,3,GIS,4,5,
+Creative Expression Elective,XXX xxx,3,GIS,4,5,

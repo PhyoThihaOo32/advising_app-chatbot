@@ -1,0 +1,20 @@
+Course_Name,Code,Credits,Major,Semester_In_2_Year_Track,Semester_In_3_Year_Track,Prerequisite
+English Composition,ENG 101,3,CIS,1,1,
+Precalculus,MAT 206,4,CIS,1,1,
+Principles in IT & Computation,CSC 101,3,CIS,1,1,
+Introduction to Business,BUS 104,3,CIS,1,3,
+Accounting Principles I,ACC 122,3,CIS,1,2,
+Fundamentals of Public Speaking,SPE 100,3,CIS,2,2,
+Introduction to Literature,ENG 201,3,CIS,2,2,ENG 101
+Computer Programming I,CSC 110,4,CIS,2,2,CSC 101
+General Astronomy,AST 110,4,CIS,2,5,
+Computer Programming II,CSC 210,4,CIS,3,3,CSC 110
+Telecommunication Network I,CIS 345,3,CIS,3,3,
+Web Programming I,CIS 385,3,CIS,3,4,
+Database Systems I,CIS 395,3,CIS,3,4,
+Program Elective 1,XXX xxx,3,CIS,3,3,
+Program Elective 2,XXX xxx,3,CIS,4,4,
+Elective,XXX xxx,3,CIS,4,5,
+Unix,CIS 440,3,CIS,4,4,
+Web Programming II,CIS 485,3,CIS,4,5,CIS 385
+Database System II,CIS 495,3,CIS,4,5,CIS 395

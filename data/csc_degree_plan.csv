@@ -1,0 +1,20 @@
+course_name,code,credits,major,semester_in_2_year_track,semester_in_3_year_track,prerequisite
+Intermediate Algebra and Precalculus,MAT 206.5,4,CSC,1,1,
+English Composition,ENG 101,3,CSC,1,1,
+Principles in IT & Computation,CSC 101,3,CSC,1,1,
+Individual and Society,XXX xxx,3,CSC,1,5,
+Analytic Geometry and Calculus I,MAT 301,4,CSC,2,2,MAT 206.5
+Introduction to Literature,ENG 201,3,CSC,2,2,ENG 101
+Introduction to Programming,CSC 111,4,CSC,2,2,MAT 206.5
+Fundamentals of Public Speaking,SPE 100,3,CSC,2,4,
+U.S. Experience in Its Diversity,XXX xxx,3,CSC,2,2,
+University Physics I,PHY 215,4,CSC,3,4,MAT 301
+Analytic Geometry and Calculus II,MAT 302,4,CSC,3,3,MAT 301
+Advanced Programming Techniques,CSC 211,3,CSC,3,3,CSC 111
+Discrete Structures,CSC 231,3,CSC,3,3,MAT 301
+Fundamentals of Computer Systems,CSC 215,3,CSC,4,3,CSC 111
+Data Structures,CSC 331,3,CSC,4,4,CSC 211
+Software Development,CSC 350,3,CSC,4,4,CSC 211
+World Cultures and Global Issues,XXX xxx,3,CSC,4,5,
+Program Elective 1,XXX xxx,3,CSC,3,5,
+Program Elective 2,XXX xxx,3,CSC,4,5,

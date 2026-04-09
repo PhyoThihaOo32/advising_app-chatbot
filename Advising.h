@@ -18,5 +18,6 @@ public:
     void askForSemester();
     void loadSchedule(int);
     int creditsRemaining();
+    Curriculum& getCurriculum();
     Advising();
 };
