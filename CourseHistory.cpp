@@ -137,27 +137,46 @@ bool CourseHistory::validateCourse(string course) {
     return valid;
 }
 
-// Update the function signature in .h and .cpp to include 'string major'
+//// Update the function signature in .h and .cpp to include 'string major'
+//void CourseHistory::enterCourses(Curriculum& curriculum, string major) {
+//    cout << "\n--- Quick History Setup ---\n";
+//    for (int i = 0; i < curriculum.gisCourses.size(); i++) {
+//        // ONLY ask if the course belongs to the student's major
+//        if (curriculum.gisCourses[i].major == major) {
+//            int response;
+//            cout << "Did you finish " << curriculum.gisCourses[i].courseCode
+//                << " - [" << curriculum.gisCourses[i].courseName << "]? [1=Yes, 0=No]: ";
+//            
+//            cin >> response;
+//            validateInput(response, 0, 1);
+//
+//            if (response == 1) {
+//                completedCourses.push_back(curriculum.gisCourses[i].courseCode);
+//            }
+//        }
+//    }
+//    saveCourses();
+//}
 void CourseHistory::enterCourses(Curriculum& curriculum, string major) {
     cout << "\n--- Quick History Setup ---\n";
-    for (int i = 0; i < curriculum.gisCourses.size(); i++) {
-        // ONLY ask if the course belongs to the student's major
-        if (curriculum.gisCourses[i].major == major) {
-            int response;
-            cout << "Did you finish " << curriculum.gisCourses[i].courseCode
-                << " - [" << curriculum.gisCourses[i].courseName << "]? [1=Yes, 0=No]: ";
-            
-            cin >> response;
-            validateInput(response, 0, 1);
 
-            if (response == 1) {
-                completedCourses.push_back(curriculum.gisCourses[i].courseCode);
-            }
+    // Grab the correct list of courses based on the major
+    const vector<Course>& selectedCourses = curriculum.getCoursesForMajor(major);
+
+    for (const Course& course : selectedCourses) {
+        int response;
+        cout << "Did you finish " << course.courseCode
+            << " - [" << course.courseName << "]? [1=Yes, 0=No]: ";
+        
+        cin >> response;
+        validateInput(response, 0, 1);
+
+        if (response == 1) {
+            completedCourses.push_back(course.courseCode);
         }
     }
     saveCourses();
 }
-
 void CourseHistory::saveCourses() {
     ofstream file(filename);
 
