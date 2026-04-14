@@ -1,0 +1,35 @@
+major	Computer Information Systems
+opportunity	BMCC CIS Department highlights internship and summer job opportunities for CIS students through department activities and employer engagement.
+opportunity	CUNY 2X Tech at BMCC connects CIS Department majors to paid, career-related internships, employer networks, and internship/job hiring assistance.
+opportunity	Use BMCC's Office of Internships and Experiential Learning for internship orientation, application support, and internship-for-credit guidance.
+opportunity	Use BMCC Handshake (via the Center for Career Development) to search internships, book advising appointments, and prepare resumes/interviews.
+opportunity	BMCC Internship for Academic Credit allows approved, major-related internships with academic supervision and credit.
+===
+major	Computer Network Technology
+opportunity	BMCC CIS Department highlights internship and summer job opportunities for CNT students in networking and systems support pathways.
+opportunity	CUNY 2X Tech at BMCC connects CIS Department majors to paid, career-related internships, employer networks, and internship/job hiring assistance.
+opportunity	The CNT pathway supports internships connected to networking, telecommunications, infrastructure, and cybersecurity operations.
+opportunity	Use BMCC's Office of Internships and Experiential Learning for internship orientation, application support, and internship-for-credit guidance.
+opportunity	Use BMCC Handshake (via the Center for Career Development) to find internship postings and employer networking events.
+===
+major	Computer Science
+opportunity	BMCC CIS Department highlights internship and summer job opportunities for Computer Science students.
+opportunity	CUNY 2X Tech at BMCC connects CIS Department majors to paid, career-related internships, employer networks, and internship/job hiring assistance.
+opportunity	The Women in Computer Science BMCC Alumni page shows pathways from BMCC CS internships to software engineering roles.
+opportunity	Use BMCC's Office of Internships and Experiential Learning for internship orientation, application support, and internship-for-credit guidance.
+opportunity	Use BMCC Handshake (via the Center for Career Development) to find software, QA, and data-focused internships.
+===
+major	Geographic Information Science (GIS)
+opportunity	BMCC GIS students can pursue major-related internships tied to geospatial analysis, mapping, environmental data, and public-sector applications.
+opportunity	CUNY 2X Tech at BMCC connects CIS Department majors to paid, career-related internships, employer networks, and internship/job hiring assistance.
+opportunity	Use BMCC's Office of Internships and Experiential Learning for internship orientation, application support, and internship-for-credit guidance.
+opportunity	Use BMCC Handshake (via the Center for Career Development) to find GIS and data internships.
+opportunity	GIS students can align internship experience with BMCC geospatial coursework and portfolio development.
+===
+major	Cybersecurity Certificate
+opportunity	The BMCC Cybersecurity Certificate includes enrichment activities such as summer bridge courses, certification workshops, and career panel discussions.
+opportunity	Certificate students can use BMCC internship and career services to pursue entry-level cybersecurity and security-operations internships.
+opportunity	Use BMCC's Office of Internships and Experiential Learning for internship orientation, application support, and internship-for-credit guidance.
+opportunity	Use BMCC Handshake (via the Center for Career Development) to search cybersecurity internships and IT security roles.
+opportunity	Cybersecurity students can combine certificate coursework with internships and exam preparation for CompTIA and Cisco-aligned pathways.
+===

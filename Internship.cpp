@@ -1,127 +1,292 @@
 // implementation file for Internship class
 #include "Internship.h"
+#include <fstream>
 #include <iostream>
 
 using namespace std;
 
-Internship::Internship()
+Internship::Internship() : internshipFile("data/internship_opportunities.txt")
 {
-    // organizations where GIS students have interned
-    organizations = {
-        "Environmental Protection Agency (EPA)",
-        "NYC Economic Development Corporation",
-        "NYC Department of Transportation",
-        "NYC Department of Environmental Protection (DEP)",
-        "U.S. Coast Guard",
-        "National Intelligence University",
-        "Environmental Investigation Agency (EIA)"};
-
-    // internship course information
-    courseInfo = {
-        "Course Title: Geographic Information Science Internship",
-        "Course Number: GIS 325",
-        "Credits: 2 credits",
-        "Students typically work around 15 hours per week during the semester.",
-        "The internship allows students to apply GIS knowledge in a professional environment."};
-
-    // requirements
-    requirements = {
-        "Students work approximately 15 hours per week.",
-        "A term project must be completed during the internship.",
-        "Students are evaluated by their internship supervisor.",
-        "Students must arrange their schedules to be available during work hours."};
-
-    // resources available at BMCC
-    resources = {
-        "BMCC Center for Career Development helps with resumes and interview preparation.",
-        "Students can use Handshake to search for internships and jobs.",
-        "Career advisors and faculty can help students find internship opportunities.",
-        "BMCC career events and internship expos help students connect with employers."};
+    loadInternshipFromFile();
 }
 
-// add organization
-void Internship::setOrganization(string o)
+string Internship::encode(const string &text)
 {
-    organizations.push_back(o);
-}
-
-// add requirement
-void Internship::setRequirement(string r)
-{
-    requirements.push_back(r);
-}
-
-// add resource
-void Internship::setResource(string r)
-{
-    resources.push_back(r);
-}
-
-// display organizations
-void Internship::showOrganizations() const
-{
-    cout << "\n========================\n";
-    cout << " GIS INTERNSHIP ORGANIZATIONS\n";
-    cout << "========================\n\n";
-
-    for (const string &o : organizations)
+    string encoded;
+    for (char c : text)
     {
-        cout << "- " << o << endl;
+        if (c == '\\')
+        {
+            encoded += "\\\\";
+        }
+        else if (c == '\n')
+        {
+            encoded += "\\n";
+        }
+        else
+        {
+            encoded += c;
+        }
+    }
+    return encoded;
+}
+
+string Internship::decode(const string &text)
+{
+    string decoded;
+    bool escapeMode = false;
+
+    for (char c : text)
+    {
+        if (escapeMode)
+        {
+            if (c == 'n')
+            {
+                decoded += '\n';
+            }
+            else
+            {
+                decoded += c;
+            }
+            escapeMode = false;
+        }
+        else if (c == '\\')
+        {
+            escapeMode = true;
+        }
+        else
+        {
+            decoded += c;
+        }
     }
 
-    cout << endl;
-}
-
-// display course information
-void Internship::showCourseInfo() const
-{
-    cout << "\n========================\n";
-    cout << " GIS INTERNSHIP COURSE\n";
-    cout << "========================\n\n";
-
-    for (const string &c : courseInfo)
+    if (escapeMode)
     {
-        cout << "- " << c << endl;
+        decoded += '\\';
     }
 
-    cout << endl;
+    return decoded;
 }
 
-// display requirements
-void Internship::showRequirements() const
+bool Internship::splitKeyValue(const string &line, string &key, string &value)
 {
-    cout << "\n========================\n";
-    cout << " INTERNSHIP REQUIREMENTS\n";
-    cout << "========================\n\n";
+    size_t delimiter = line.find('\t');
+    size_t offset = 1;
 
-    for (const string &r : requirements)
+    if (delimiter == string::npos)
     {
-        cout << "- " << r << endl;
+        delimiter = line.find("\\t");
+        offset = 2;
     }
 
-    cout << endl;
-}
-
-// display resources
-void Internship::showResources() const
-{
-    cout << "\n========================\n";
-    cout << " INTERNSHIP RESOURCES AT BMCC\n";
-    cout << "========================\n\n";
-
-    for (const string &r : resources)
+    if (delimiter == string::npos)
     {
-        cout << "- " << r << endl;
+        delimiter = line.find('|');
+        offset = 1;
     }
 
-    cout << endl;
+    if (delimiter == string::npos)
+    {
+        return false;
+    }
+
+    key = line.substr(0, delimiter);
+    value = decode(line.substr(delimiter + offset));
+    return true;
 }
 
-// show everything together
+void Internship::loadInternshipFromFile()
+{
+    internshipByMajor.clear();
+
+    ifstream file(internshipFile);
+    if (!file.is_open())
+    {
+        return;
+    }
+
+    MajorInternshipOpportunities currentMajor;
+    string line;
+
+    while (getline(file, line))
+    {
+        if (line == "===")
+        {
+            if (!currentMajor.major.empty())
+            {
+                internshipByMajor.push_back(currentMajor);
+            }
+            currentMajor = MajorInternshipOpportunities();
+            continue;
+        }
+
+        if (line.empty())
+        {
+            continue;
+        }
+
+        string key;
+        string value;
+        if (!splitKeyValue(line, key, value))
+        {
+            continue;
+        }
+
+        if (key == "major")
+        {
+            if (!currentMajor.major.empty())
+            {
+                internshipByMajor.push_back(currentMajor);
+            }
+
+            currentMajor = MajorInternshipOpportunities();
+            currentMajor.major = value;
+        }
+        else if ((key == "opportunity" || key == "internship") && !currentMajor.major.empty())
+        {
+            currentMajor.opportunities.push_back(value);
+        }
+    }
+
+    if (!currentMajor.major.empty())
+    {
+        internshipByMajor.push_back(currentMajor);
+    }
+}
+
+void Internship::saveInternshipToFile() const
+{
+    ofstream file(internshipFile);
+    for (const MajorInternshipOpportunities &majorEntry : internshipByMajor)
+    {
+        file << "major\t" << encode(majorEntry.major) << '\n';
+        for (const string &opportunity : majorEntry.opportunities)
+        {
+            file << "opportunity\t" << encode(opportunity) << '\n';
+        }
+        file << "===\n";
+    }
+}
+
+MajorInternshipOpportunities *Internship::findMajorInternship(const string &major)
+{
+    for (MajorInternshipOpportunities &entry : internshipByMajor)
+    {
+        if (entry.major == major)
+        {
+            return &entry;
+        }
+    }
+    return nullptr;
+}
+
+const MajorInternshipOpportunities *Internship::findMajorInternship(const string &major) const
+{
+    for (const MajorInternshipOpportunities &entry : internshipByMajor)
+    {
+        if (entry.major == major)
+        {
+            return &entry;
+        }
+    }
+    return nullptr;
+}
+
+void Internship::addInternshipOpportunity(const string &major, const string &opportunity)
+{
+    MajorInternshipOpportunities *majorEntry = findMajorInternship(major);
+    if (majorEntry == nullptr)
+    {
+        MajorInternshipOpportunities newEntry;
+        newEntry.major = major;
+        newEntry.opportunities.push_back(opportunity);
+        internshipByMajor.push_back(newEntry);
+    }
+    else
+    {
+        majorEntry->opportunities.push_back(opportunity);
+    }
+
+    saveInternshipToFile();
+}
+
 void Internship::showInternshipInfo() const
 {
-    showOrganizations();
-    showCourseInfo();
-    showRequirements();
-    showResources();
+    showInternshipInfo("Geographic Information Science (GIS)");
+}
+
+void Internship::showInternshipInfo(const string &major) const
+{
+    cout << "\n============================================\n";
+    cout << " INTERNSHIP OPPORTUNITIES\n";
+    cout << "============================================\n\n";
+    cout << "Major/Program: " << major << "\n\n";
+
+    const MajorInternshipOpportunities *majorEntry = findMajorInternship(major);
+    if (majorEntry == nullptr || majorEntry->opportunities.empty())
+    {
+        cout << "No internship data is available for this major yet.\n\n";
+        return;
+    }
+
+    for (const string &opportunity : majorEntry->opportunities)
+    {
+        cout << "- " << opportunity << endl;
+    }
+
+    cout << endl;
+}
+
+void Internship::showInternshipNumbered(const string &major) const
+{
+    cout << "\n============================================\n";
+    cout << " INTERNSHIP LIST (ADMIN)\n";
+    cout << "============================================\n\n";
+    cout << "Major/Program: " << major << "\n\n";
+
+    const MajorInternshipOpportunities *majorEntry = findMajorInternship(major);
+    if (majorEntry == nullptr || majorEntry->opportunities.empty())
+    {
+        cout << "No internship data is available for this major yet.\n\n";
+        return;
+    }
+
+    for (size_t i = 0; i < majorEntry->opportunities.size(); i++)
+    {
+        cout << i + 1 << ". " << majorEntry->opportunities[i] << endl;
+    }
+
+    cout << endl;
+}
+
+bool Internship::removeInternshipOpportunity(const string &major, int oneBasedIndex)
+{
+    if (oneBasedIndex <= 0)
+    {
+        return false;
+    }
+
+    for (size_t i = 0; i < internshipByMajor.size(); i++)
+    {
+        if (internshipByMajor[i].major == major)
+        {
+            vector<string> &opportunities = internshipByMajor[i].opportunities;
+            if (oneBasedIndex > static_cast<int>(opportunities.size()))
+            {
+                return false;
+            }
+
+            opportunities.erase(opportunities.begin() + (oneBasedIndex - 1));
+
+            if (opportunities.empty())
+            {
+                internshipByMajor.erase(internshipByMajor.begin() + i);
+            }
+
+            saveInternshipToFile();
+            return true;
+        }
+    }
+
+    return false;
 }

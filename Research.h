@@ -2,34 +2,41 @@
 #ifndef RESEARCH_H
 #define RESEARCH_H
 
-#include <vector>
 #include <string>
+#include <vector>
 using namespace std;
+
+struct MajorResearchOpportunities
+{
+    string major;
+    vector<string> opportunities;
+};
 
 class Research
 {
 private:
-    vector<string> researchAreas;
-    vector<string> researchActivities;
-    vector<string> opportunities;
-    vector<string> resources;
+    vector<MajorResearchOpportunities> researchByMajor;
+    string researchFile;
+
+    static string encode(const string &text);
+    static string decode(const string &text);
+    static bool splitKeyValue(const string &line, string &key, string &value);
+
+    void loadResearchFromFile();
+    void saveResearchToFile() const;
+
+    MajorResearchOpportunities *findMajorResearch(const string &major);
+    const MajorResearchOpportunities *findMajorResearch(const string &major) const;
 
 public:
-    // default constructor will initialize research information
     Research();
 
-    // functions to add more information
-    void setResearchArea(string);
-    void setOpportunity(string);
-    void setResource(string);
+    void addResearchOpportunity(const string &major, const string &opportunity);
+    void showResearchInfo(const string &major) const;
+    void showResearchNumbered(const string &major) const;
+    bool removeResearchOpportunity(const string &major, int oneBasedIndex);
 
-    // display functions
-    void showResearchAreas() const;
-    void showResearchActivities() const;
-    void showOpportunities() const;
-    void showResources() const;
-
-    // show all research information
+    // Backward-compatible default display
     void showResearchInfo() const;
 };
 

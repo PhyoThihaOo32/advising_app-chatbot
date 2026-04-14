@@ -1,0 +1,40 @@
+major	Computer Information Systems
+opportunity	BMCC Student Research Opportunities connect students with faculty-mentored research projects and skill-building workshops.
+opportunity	BMCC Foundation Fund for Undergraduate Research (BFF) supports semester-long projects (100 hours) with a stipend.
+opportunity	CUNY Research Scholars Program (CRSP) offers faculty-mentored STEM research with stipends and structured professional development.
+opportunity	CSTEP at BMCC offers research-track participation with faculty mentors, conference exposure, and STEM support services.
+opportunity	CUNY STARS supports transfer-focused STEM students with hands-on research pathways and paid opportunities.
+opportunity	BMCC Annual Research Symposium (BARS) lets students present project results to the BMCC community.
+===
+major	Computer Network Technology
+opportunity	BMCC Student Research Opportunities connect CNT students with faculty-mentored applied research projects.
+opportunity	BMCC Foundation Fund for Undergraduate Research (BFF) supports semester-long projects (100 hours) with a stipend.
+opportunity	CUNY Research Scholars Program (CRSP) offers faculty-mentored STEM research with stipends and structured professional development.
+opportunity	CSTEP at BMCC offers research-track participation with faculty mentors, conference exposure, and STEM support services.
+opportunity	CUNY STARS supports transfer-focused STEM students with hands-on research pathways and paid opportunities.
+opportunity	BMCC Annual Research Symposium (BARS) lets students present networking, systems, and security project outcomes.
+===
+major	Computer Science
+opportunity	BMCC Student Research Opportunities connect CS students with faculty-mentored research projects.
+opportunity	BMCC Foundation Fund for Undergraduate Research (BFF) supports semester-long projects (100 hours) with a stipend.
+opportunity	CUNY Research Scholars Program (CRSP) offers faculty-mentored STEM research with stipends and structured professional development.
+opportunity	CSTEP at BMCC offers research-track participation with faculty mentors, conference exposure, and STEM support services.
+opportunity	CUNY STARS supports transfer-focused STEM students with hands-on research pathways and paid opportunities.
+opportunity	BMCC Annual Research Symposium (BARS) lets students present software, data, and computing research to campus audiences.
+===
+major	Geographic Information Science (GIS)
+opportunity	BMCC Student Research Opportunities connect GIS students with faculty-mentored spatial-data and geospatial research projects.
+opportunity	BMCC Foundation Fund for Undergraduate Research (BFF) supports semester-long projects (100 hours) with a stipend.
+opportunity	CUNY Research Scholars Program (CRSP) offers faculty-mentored STEM research with stipends and structured professional development.
+opportunity	CSTEP at BMCC offers research-track participation with faculty mentors, conference exposure, and STEM support services.
+opportunity	CUNY STARS supports transfer-focused STEM students with hands-on research pathways and paid opportunities.
+opportunity	BMCC Annual Research Symposium (BARS) lets students present GIS, mapping, sustainability, and urban-data research.
+===
+major	Cybersecurity Certificate
+opportunity	BMCC Student Research Opportunities connect cybersecurity students with faculty-mentored applied research projects.
+opportunity	BMCC Foundation Fund for Undergraduate Research (BFF) supports semester-long projects (100 hours) with a stipend.
+opportunity	CUNY Research Scholars Program (CRSP) offers faculty-mentored STEM research with stipends and structured professional development.
+opportunity	CSTEP at BMCC offers research-track participation with faculty mentors, conference exposure, and STEM support services.
+opportunity	CUNY STARS supports transfer-focused STEM students with hands-on research pathways and paid opportunities.
+opportunity	BMCC Annual Research Symposium (BARS) lets students present security, privacy, and cyber risk projects.
+===

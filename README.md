@@ -20,7 +20,7 @@ The BMCC CS Advising App was created to help address these challenges through an
   Helps students explore academic planning and course guidance.
 
 - **Career Pathway Guidance**  
-  Introduces different GIS-related career fields and roles.
+  Introduces major-based career fields and roles across CIS, CNT, CSC, GIS, and Cybersecurity.
 
 - **Alumni Insight**  
   Shares educational backgrounds, career updates, and advice from BMCC alumni.
@@ -36,7 +36,7 @@ The BMCC CS Advising App was created to help address these challenges through an
 
 - **Role-Based Access**
   - `User` mode is read-only.
-  - `Admin` mode can add/delete advising data files for career pathways, transfer options, and alumni profiles.
+  - `Admin` mode can add/delete advising data files for career pathways, transfer options, alumni profiles, internship opportunities, and research opportunities.
   - Admin login password: `csc211Hadvisingchatbot`
 
 ---
@@ -69,6 +69,8 @@ GIS-Advising-App/
 │   ├── alumni.txt
 │   ├── career_paths.txt
 │   ├── completed_courses.txt
+│   ├── internship_opportunities.txt
+│   ├── research_opportunities.txt
 │   └── transfer_options.txt
 ├── Internship.cpp
 ├── Internship.h
@@ -82,7 +84,7 @@ GIS-Advising-App/
 └── TransferOption.h
 ```
 
-## Data File Format (Career/Transfer/Alumni)
+## Data File Format (Career/Transfer/Alumni/Internship/Research)
 
 - `data/career_paths.txt`
   - `major|<major name>`
@@ -105,4 +107,14 @@ GIS-Advising-App/
   - `linkedin|<linkedin url>`
   - `advice|<advice text>`
   - `---` ends one alumni record
+  - `===` ends one major section
+
+- `data/internship_opportunities.txt`
+  - `major|<major name>`
+  - `opportunity|<internship opportunity or internship resource>`
+  - `===` ends one major section
+
+- `data/research_opportunities.txt`
+  - `major|<major name>`
+  - `opportunity|<research opportunity or research resource>`
   - `===` ends one major section

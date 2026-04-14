@@ -21,15 +21,15 @@ namespace
         switch (choice)
         {
         case 1:
-            return "Computer Information Systems (CIS)";
+            return "Computer Information Systems";
         case 2:
-            return "Computer Network Technology (CNT)";
+            return "Computer Network Technology";
         case 3:
-            return "Computer Science (CSC)";
+            return "Computer Science";
         case 4:
             return "Geographic Information Science (GIS)";
         case 5:
-            return "Cybersecurity Certificate (CYB)";
+            return "Cybersecurity Certificate";
         default:
             return "Geographic Information Science (GIS)";
         }
@@ -101,22 +101,26 @@ namespace
 
     void showInternshipOrResearch(Advising &advisor, Internship &internship, Research &research)
     {
+        int majorChoice = promptMajorChoice(advisor);
+        string selectedMajor = majorFromChoice(majorChoice);
+
         int select;
 
         cout << "\nOpportunities\n";
         cout << "1. Internship Opportunity\n";
-        cout << "2. Research Opportunity\n";
+        cout << "2. Research Opportunity\n\n";
+        cout << "Enter your choice: ";
 
         cin >> select;
         advisor.validateInput(select, 1, 2);
 
         if (select == 1)
         {
-            internship.showInternshipInfo();
+            internship.showInternshipInfo(selectedMajor);
         }
         else
         {
-            research.showResearchInfo();
+            research.showResearchInfo(selectedMajor);
         }
     }
 
@@ -323,21 +327,24 @@ namespace
                  << "[2] Add Career Pathway (writes to file)\n"
                  << "[3] Add Transfer Option (writes to file)\n"
                  << "[4] Add Alumni Profile (writes to file)\n"
-                 << "[5] Delete Career Pathway (writes to file)\n"
-                 << "[6] Delete Transfer Option (writes to file)\n"
-                 << "[7] Delete Alumni Profile (writes to file)\n"
-                 << "[8] Open User Menu (read-only)\n"
+                 << "[5] Add Internship Opportunity (writes to file)\n"
+                 << "[6] Add Research Opportunity (writes to file)\n"
+                 << "[7] Delete Career Pathway (writes to file)\n"
+                 << "[8] Delete Transfer Option (writes to file)\n"
+                 << "[9] Delete Alumni Profile (writes to file)\n"
+                 << "[10] Delete Internship Opportunity (writes to file)\n"
+                 << "[11] Delete Research Opportunity (writes to file)\n"
+                 << "[12] Open User Menu (read-only)\n"
                  << "[0] Logout\n\n"
                  << "Enter your choice: ";
 
             cin >> command;
-            advisor.validateInput(command, 0, 8);
+            advisor.validateInput(command, 0, 12);
 
             switch (command)
             {
             case 1:
             {
-                // Curriculum advising edits go here.
                 runCurriculumEditor(advisor);
                 break;
             }
@@ -383,6 +390,48 @@ namespace
             {
                 int majorChoice = promptMajorChoice(advisor);
                 string selectedMajor = majorFromChoice(majorChoice);
+                clearLine();
+
+                string internshipOpportunity;
+                cout << "Enter new internship opportunity: ";
+                getline(cin, internshipOpportunity);
+
+                if (internshipOpportunity.empty())
+                {
+                    cout << "No data saved. Internship opportunity cannot be empty.\n";
+                }
+                else
+                {
+                    internship.addInternshipOpportunity(selectedMajor, internshipOpportunity);
+                    cout << "Internship opportunity saved successfully.\n";
+                }
+                break;
+            }
+            case 6:
+            {
+                int majorChoice = promptMajorChoice(advisor);
+                string selectedMajor = majorFromChoice(majorChoice);
+                clearLine();
+
+                string researchOpportunity;
+                cout << "Enter new research opportunity: ";
+                getline(cin, researchOpportunity);
+
+                if (researchOpportunity.empty())
+                {
+                    cout << "No data saved. Research opportunity cannot be empty.\n";
+                }
+                else
+                {
+                    research.addResearchOpportunity(selectedMajor, researchOpportunity);
+                    cout << "Research opportunity saved successfully.\n";
+                }
+                break;
+            }
+            case 7:
+            {
+                int majorChoice = promptMajorChoice(advisor);
+                string selectedMajor = majorFromChoice(majorChoice);
 
                 career.showCareerNumbered(selectedMajor);
 
@@ -404,7 +453,7 @@ namespace
                 }
                 break;
             }
-            case 6:
+            case 8:
             {
                 int majorChoice = promptMajorChoice(advisor);
                 string selectedMajor = majorFromChoice(majorChoice);
@@ -429,7 +478,7 @@ namespace
                 }
                 break;
             }
-            case 7:
+            case 9:
             {
                 int majorChoice = promptMajorChoice(advisor);
                 string selectedMajor = majorFromChoice(majorChoice);
@@ -454,7 +503,57 @@ namespace
                 }
                 break;
             }
-            case 8:
+            case 10:
+            {
+                int majorChoice = promptMajorChoice(advisor);
+                string selectedMajor = majorFromChoice(majorChoice);
+
+                internship.showInternshipNumbered(selectedMajor);
+
+                int indexToDelete;
+                cout << "Enter internship opportunity number to delete (0 to cancel): ";
+                cin >> indexToDelete;
+
+                if (indexToDelete == 0)
+                {
+                    cout << "Delete canceled.\n";
+                }
+                else if (internship.removeInternshipOpportunity(selectedMajor, indexToDelete))
+                {
+                    cout << "Internship opportunity deleted successfully.\n";
+                }
+                else
+                {
+                    cout << "Invalid selection. Nothing was deleted.\n";
+                }
+                break;
+            }
+            case 11:
+            {
+                int majorChoice = promptMajorChoice(advisor);
+                string selectedMajor = majorFromChoice(majorChoice);
+
+                research.showResearchNumbered(selectedMajor);
+
+                int indexToDelete;
+                cout << "Enter research opportunity number to delete (0 to cancel): ";
+                cin >> indexToDelete;
+
+                if (indexToDelete == 0)
+                {
+                    cout << "Delete canceled.\n";
+                }
+                else if (research.removeResearchOpportunity(selectedMajor, indexToDelete))
+                {
+                    cout << "Research opportunity deleted successfully.\n";
+                }
+                else
+                {
+                    cout << "Invalid selection. Nothing was deleted.\n";
+                }
+                break;
+            }
+            case 12:
                 runUserMenu(advisor, career, options, internship, research);
                 break;
             case 0:
